@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 # app/ai_recommendations.py - Sistema di Raccomandazioni AI Avanzato
 """
 Sistema di raccomandazioni AI avanzato per Assessment Digitale 4.0

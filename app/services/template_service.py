@@ -1,3 +1,4 @@
+import re
 from typing import Optional
 
 from sqlalchemy.orm import Session, joinedload
@@ -19,8 +20,17 @@ def create_template(
     description: Optional[str] = None,
     sector: Optional[str] = None,
     is_active: bool = True,
+    code: Optional[str] = None,
 ):
+    """Crea nuovo template con auto-generazione code"""
+    
+    # AUTO-GENERA CODE se manca
+    if not code:
+        # Genera code da name: "My Template" -> "my_template"
+        code = re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_')
+    
     tpl = models.AssessmentTemplate(
+        code=code,
         name=name,
         description=description,
         sector=sector,
@@ -30,7 +40,6 @@ def create_template(
     db.commit()
     db.refresh(tpl)
     return tpl
-
 
 def get_template(db: Session, template_id: str):
     return (
@@ -56,17 +65,24 @@ def list_template_versions(db: Session, template_id: str):
 def create_template_version(
     db: Session,
     template_id: str,
-    version_label: str,
+    version_label: str = None,
     status: str = "draft",
     model_name: Optional[str] = None,
     base_version_id: Optional[str] = None,
 ):
+    # Calcola prossimo numero versione
+    last_version = db.query(models.TemplateVersion).filter(
+        models.TemplateVersion.template_id == template_id
+    ).order_by(models.TemplateVersion.version.desc()).first()
+    
+    next_version = (last_version.version + 1) if last_version else 1
+    
     # crea versione
     new_version = models.TemplateVersion(
         template_id=template_id,
-        version_label=version_label,
-        status=status,
-        model_name=model_name,
+        version=next_version,
+        is_active=True,
+        is_deprecated=False
     )
     db.add(new_version)
     db.commit()

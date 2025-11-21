@@ -185,14 +185,14 @@ def submit(session_id: UUID, results: List[schemas.AssessmentResultCreate], db: 
 # 📊 Visualizza risultati sessione
 @api_router.get("/assessment/{session_id}/results", response_model=List[schemas.AssessmentResultOut])
 def results(session_id: UUID, db: Session = Depends(get_db)):
-    """Restituisce i risultati ordinati secondo il modello JSON"""
+    """Restituisce i risultati ordinati secondo il template (DB o JSON)"""
+    from app.services.template_data_service import get_session_data_source
     
     # Ottieni risultati dal DB
     results = db.query(models.AssessmentResult).filter(
         models.AssessmentResult.session_id == session_id
     ).all()
     
-    # Ottieni il nome del modello dalla sessione
     session = db.query(models.AssessmentSession).filter(
         models.AssessmentSession.id == session_id
     ).first()
@@ -200,64 +200,78 @@ def results(session_id: UUID, db: Session = Depends(get_db)):
     if not session or not results:
         return results
     
-    model_name = session.model_name or 'casoin'
+    # Ottieni struttura dati (DB o JSON)
+    data_source = get_session_data_source(session, db)
     
-    # Carica il JSON del modello per ottenere l'ordine
-    try:
+    # ORDINAMENTO RISULTATI
+    if data_source['source'] == 'db':
+        # NUOVO: Ordina usando questions dal DB
+        questions = data_source['questions']
+        
+        # Crea mappa ordinamento da questions
+        order_map = {}
+        for idx, q in enumerate(questions):
+            key = (q.process, q.activity, q.category, q.text)
+            order_map[key] = idx
+        
+        def get_sort_key_db(result):
+            key = (result.process, result.activity, result.category, result.dimension)
+            return order_map.get(key, 9999)
+        
+        results.sort(key=get_sort_key_db)
+        
+    else:
+        # VECCHIO: Ordina usando JSON
         import json
         from pathlib import Path
         
+        model_name = session.model_name or 'i40_assessment_fto'
         model_path = Path(f"frontend/public/{model_name}.json")
-        if not model_path.exists():
-            return results  # Se il modello non esiste, restituisci senza ordinare
         
-        with open(model_path, 'r', encoding='utf-8') as f:
-            model_data = json.load(f)
-        
-        # Crea mappa di ordinamento: process -> category -> [activities in order]
-        order_map = {}
-        for proc in model_data:
-            proc_name = proc.get('process')
-            if proc_name not in order_map:
-                order_map[proc_name] = {}
-            
-            for activity in proc.get('activities', []):
-                act_name = activity.get('name')
-                for category in activity.get('categories', {}).keys():
-                    if category not in order_map[proc_name]:
-                        order_map[proc_name][category] = []
-                    if act_name not in order_map[proc_name][category]:
-                        order_map[proc_name][category].append(act_name)
-        
-        # Ordina i risultati
-        def get_sort_key(result):
-            proc = result.process
-            cat = result.category
-            act = result.activity
-            
-            # Ottieni l'indice dall'order_map
+        if model_path.exists():
             try:
-                proc_order = list(order_map.keys()).index(proc)
-            except (ValueError, AttributeError):
-                proc_order = 999
-            
-            try:
-                cat_order = ['Governance', 'Monitoring & Control', 'Technology', 'Organization'].index(cat)
-            except ValueError:
-                cat_order = 999
-            
-            try:
-                act_order = order_map.get(proc, {}).get(cat, []).index(act)
-            except (ValueError, AttributeError):
-                act_order = 999
-            
-            return (proc_order, cat_order, act_order)
-        
-        results.sort(key=get_sort_key)
-        
-    except Exception as e:
-        print(f"⚠️ Warning: Could not order results: {e}")
-    
+                with open(model_path, 'r', encoding='utf-8') as f:
+                    model_data = json.load(f)
+                
+                order_map_json = {}
+                for proc in model_data:
+                    proc_name = proc.get('process')
+                    if proc_name not in order_map_json:
+                        order_map_json[proc_name] = {}
+                    
+                    for activity in proc.get('activities', []):
+                        act_name = activity.get('name')
+                        for category in activity.get('categories', {}).keys():
+                            if category not in order_map_json[proc_name]:
+                                order_map_json[proc_name][category] = []
+                            if act_name not in order_map_json[proc_name][category]:
+                                order_map_json[proc_name][category].append(act_name)
+                
+                def get_sort_key(result):
+                    proc = result.process
+                    cat = result.category
+                    act = result.activity
+                    
+                    try:
+                        proc_order = list(order_map_json.keys()).index(proc)
+                    except (ValueError, AttributeError):
+                        proc_order = 999
+                    
+                    try:
+                        cat_order = ['Governance', 'Monitoring & Control', 'Technology', 'Organization'].index(cat)
+                    except ValueError:
+                        cat_order = 999
+                    
+                    try:
+                        act_order = order_map_json.get(proc, {}).get(cat, []).index(act)
+                    except (ValueError, AttributeError):
+                        act_order = 999
+                    
+                    return (proc_order, cat_order, act_order)
+                
+                results.sort(key=get_sort_key)
+            except Exception as e:
+                print(f"⚠️ Warning: Could not order results from JSON: {e}")
     
     # Calcola processRating per ogni processo
     process_scores = {}
@@ -270,14 +284,16 @@ def results(session_id: UUID, db: Session = Depends(get_db)):
     process_ratings = {}
     for proc, scores in process_scores.items():
         if scores:
-            process_ratings[proc] = round(sum(scores) / len(scores), 2)
+            avg = sum(scores) / len(scores)
+            process_ratings[proc] = round(avg, 2)
+        else:
+            process_ratings[proc] = 0.0
     
+    # Aggiungi processRating a ogni result
     for result in results:
-        result.processRating = process_ratings.get(result.process, 0)
-
+        result.processRating = process_ratings.get(result.process, 0.0)
+    
     return results
-
-# 🗑️ Cancella assessment completo (sessione + risultati)
 @api_router.delete("/assessment/{session_id}")
 def delete_assessment(session_id: UUID, db: Session = Depends(get_db)):
     """Cancella completamente un assessment: sessione + tutti i risultati"""

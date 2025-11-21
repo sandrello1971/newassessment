@@ -146,7 +146,7 @@ class PDFReportGenerator:
         table_data = [
             ['Effettuato da:', session_data.get('effettuato_da', 'N/A')],
             ['Referente aziendale:', session_data.get('referente', 'N/A')],
-            ['Modello utilizzato:', session_data.get('model_name', 'i40_assessment_fto')],
+            ['Modello utilizzato:', session_data.get('template_name', session_data.get('model_name', 'i40_assessment_fto'))],
             ['Data:', session_data.get('data_chiusura', datetime.now()).strftime('%d/%m/%Y') if session_data.get('data_chiusura') else datetime.now().strftime('%d/%m/%Y')]
         ]
         

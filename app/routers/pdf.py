@@ -57,6 +57,7 @@ async def generate_pdf_report(session_id: str, db: Session = Depends(get_db)):
         "creato_il": session.creato_il,
         "logo_path": session.logo_path,
         "model_name": session.model_name or "i40_assessment_fto",
+        "template_name": None,
         "data_chiusura": session.data_chiusura,
         "user_name": user_name,
         "pareto_recommendations": session.pareto_recommendations
@@ -79,6 +80,19 @@ async def generate_pdf_report(session_id: str, db: Session = Depends(get_db)):
     stats_data = await calculate_pdf_stats(session_id, db)
     stats_data["session_id"] = session_id
     
+    # Se usa template_version_id, recupera il nome del template
+    if session.template_version_id:
+        from app.models import TemplateVersion, AssessmentTemplate
+        template_version = db.query(TemplateVersion).filter(
+            TemplateVersion.id == session.template_version_id
+        ).first()
+        if template_version:
+            template = db.query(AssessmentTemplate).filter(
+                AssessmentTemplate.id == template_version.template_id
+            ).first()
+            if template:
+                session_data["template_name"] = f"{template.name} (v{template_version.version})"
+
     
     # Calcola dati radar per processi (per grafico globale con 4 dimensioni)
     processes_radar = await calculate_processes_radar(session_id, db)

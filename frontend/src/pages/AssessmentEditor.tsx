@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -35,6 +35,7 @@ const TestTableFormByCategory = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
   const [floatingMenu, setFloatingMenu] = useState<{
     visible: boolean;
     x: number;
@@ -105,6 +106,10 @@ const TestTableFormByCategory = () => {
     const existing = answers.get(key) || { process, activity, category, dimension, score: 0, note: '', is_not_applicable: false };
     updated.set(key, { ...existing, score });
     setAnswers(updated);
+    
+    // Auto-save
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => autoSave(), 1000);
   };
 
   const handleNoteChange = (process: string, activity: string, category: string, dimension: string, note: string) => {
@@ -113,6 +118,10 @@ const TestTableFormByCategory = () => {
     const existing = answers.get(key) || { process, activity, category, dimension, score: 0, is_not_applicable: false };
     updated.set(key, { ...existing, note });
     setAnswers(updated);
+    
+    // Auto-save (note - 2 sec)
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => autoSave(), 2000);
   };
 
   const handleNotApplicableToggle = (process: string, activity: string, category: string, dimension: string) => {
@@ -122,6 +131,10 @@ const TestTableFormByCategory = () => {
     updated.set(key, { ...existing, is_not_applicable: !existing.is_not_applicable, score: !existing.is_not_applicable ? 0 : existing.score });
     setAnswers(updated);
   };
+    
+    // Auto-save (N/A - 500ms)
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => autoSave(), 500);
 
   // Copia in colonna
   const copyToColumn = (process: string, category: string, dimension: string, score: number, startRowIndex: number) => {

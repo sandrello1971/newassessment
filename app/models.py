@@ -30,6 +30,7 @@ class AssessmentSession(Base):
     effettuato_da = Column(Text, nullable=True)  # Chi esegue l'assessment
     email = Column(Text, nullable=True)
     model_name = Column(Text, nullable=True, default="i40_assessment_fto")  # Nome del modello JSON usato
+    template_version_id = Column(UUID(as_uuid=True), ForeignKey("template_versions.id"), nullable=True)  # Nuova: link a template versionato
     risposte_json = Column(Text, nullable=True)
     punteggi_json = Column(Text, nullable=True)
     raccomandazioni = Column(Text, nullable=True)

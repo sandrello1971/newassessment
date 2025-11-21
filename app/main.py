@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException
+from app.routers import templates
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from uuid import UUID
@@ -13,6 +14,7 @@ from app.routers import excel_export
 
 # ✅ Init FastAPI app
 app = FastAPI()
+app.include_router(templates.router)
 
 # ✅ Middleware CORS
 app.add_middleware(
@@ -28,47 +30,86 @@ api_router = APIRouter(prefix="/api")
 
 
 # Funzione per pre-popolare le risposte
-def prepopulate_assessment_responses(session_id: UUID, model_name: str, db: Session):
-    """Pre-crea tutte le risposte con score=0 quando viene creato un assessment"""
+def prepopulate_assessment_responses(session_id: UUID, model_name: str = None, template_version_id: str = None, db: Session = None):
+    """
+    Pre-crea tutte le risposte con score=0 quando viene creato un assessment.
+    Supporta ENTRAMBI i sistemi:
+    - Vecchio: usa model_name per caricare JSON
+    - Nuovo: usa template_version_id per caricare da DB
+    """
     import json
     from pathlib import Path
     
-    model_path = Path(f"frontend/public/{model_name}.json")
-    if not model_path.exists():
-        print(f"⚠️ Modello {model_name} non trovato")
-        return
-    
-    try:
-        with open(model_path, 'r', encoding='utf-8') as f:
-            model_data = json.load(f)
-    except Exception as e:
-        print(f"⚠️ Errore caricamento modello: {e}")
-        return
-    
     responses_to_create = []
     
-    for process_data in model_data:
-        process_name = process_data.get('process', '')
-        for activity in process_data.get('activities', []):
-            activity_name = activity.get('name', '')
-            for category_name, dimensions in activity.get('categories', {}).items():
-                for dimension_name in dimensions.keys():
-                    response = models.AssessmentResult(
-                        session_id=session_id,
-                        process=process_name,
-                        activity=activity_name,
-                        category=category_name,
-                        dimension=dimension_name,
-                        score=0,
-                        note='',
-                        is_not_applicable=False
-                    )
-                    responses_to_create.append(response)
+    # NUOVO SISTEMA: Template versionati dal DB
+    if template_version_id:
+        print(f"📊 Prepopolo da template_version: {template_version_id}")
+        try:
+            # Carica questions dal DB per questa versione
+            questions = db.query(models.Question).filter(
+                models.Question.version_id == template_version_id
+            ).all()
+            
+            for q in questions:
+                response = models.AssessmentResult(
+                    session_id=session_id,
+                    process=q.process or '',
+                    activity=q.activity or '',
+                    category=q.category or '',
+                    dimension=q.text,
+                    score=0,
+                    note='',
+                    is_not_applicable=False
+                )
+                responses_to_create.append(response)
+            
+            print(f"✅ Pre-popolate {len(responses_to_create)} risposte da template DB")
+        except Exception as e:
+            print(f"⚠️ Errore prepopolamento da template: {e}")
+            return
     
+    # VECCHIO SISTEMA: JSON file
+    else:
+        model_name = model_name or "i40_assessment_fto"
+        print(f"📄 Prepopolo da JSON: {model_name}")
+        
+        model_path = Path(f"frontend/public/{model_name}.json")
+        if not model_path.exists():
+            print(f"⚠️ Modello {model_name} non trovato")
+            return
+        
+        try:
+            with open(model_path, 'r', encoding='utf-8') as f:
+                model_data = json.load(f)
+        except Exception as e:
+            print(f"⚠️ Errore caricamento modello: {e}")
+            return
+        
+        for process_data in model_data:
+            process_name = process_data.get('process', '')
+            for activity in process_data.get('activities', []):
+                activity_name = activity.get('name', '')
+                for category_name, dimensions in activity.get('categories', {}).items():
+                    for dimension_name in dimensions.keys():
+                        response = models.AssessmentResult(
+                            session_id=session_id,
+                            process=process_name,
+                            activity=activity_name,
+                            category=category_name,
+                            dimension=dimension_name,
+                            score=0,
+                            note='',
+                            is_not_applicable=False
+                        )
+                        responses_to_create.append(response)
+        
+        print(f"✅ Pre-popolate {len(responses_to_create)} risposte da JSON")
+    
+    # Salva tutte le risposte
     if responses_to_create:
         db.bulk_save_objects(responses_to_create)
         db.commit()
-        print(f"✅ Pre-popolate {len(responses_to_create)} risposte")
 
 # 📥 Crea sessione di assessment
 @api_router.post("/assessment/session", response_model=schemas.AssessmentSessionOut)
@@ -78,9 +119,14 @@ def create_session(data: schemas.AssessmentSessionCreate, db: Session = Depends(
     db.commit()
     db.refresh(obj)
     
-    # Pre-popola risposte
-    model_name = data.model_name or "i40_assessment_fto"
-    prepopulate_assessment_responses(obj.id, model_name, db)
+    # Pre-popola risposte (supporta entrambi i sistemi)
+    if data.template_version_id:
+        # NUOVO: usa template versionato
+        prepopulate_assessment_responses(obj.id, template_version_id=data.template_version_id, db=db)
+    else:
+        # VECCHIO: usa JSON
+        model_name = data.model_name or "i40_assessment_fto"
+        prepopulate_assessment_responses(obj.id, model_name=model_name, db=db)
     return obj
 
 # 📋 Lista sessioni

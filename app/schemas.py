@@ -56,6 +56,7 @@ class AssessmentSessionCreate(BaseModel):
     email: Optional[str] = None
     effettuato_da: Optional[str] = None
     model_name: Optional[str] = 'i40_assessment_fto'
+    template_version_id: Optional[str] = None  # UUID del template versionato (nuovo sistema)
     risposte_json: Optional[str] = None
     punteggi_json: Optional[str] = None
     raccomandazioni: Optional[str] = None
@@ -63,9 +64,9 @@ class AssessmentSessionCreate(BaseModel):
 
 class AssessmentSessionOut(AssessmentSessionCreate):
     id: UUID
+    template_version_id: Optional[UUID] = None  # Override: UUID in output
     data_chiusura: Optional[datetime] = None
     creato_il: Optional[datetime] = None
-
     class Config:
         from_attributes = True
 

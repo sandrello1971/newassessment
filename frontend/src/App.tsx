@@ -15,11 +15,12 @@ import TestTableForm from './pages/TestTableForm';
 import AssessmentEditor from './pages/AssessmentEditor';
 
 import AdminTemplates from './pages/admin/AdminTemplates';
-import AdminQuestions from './pages/admin/AdminQuestions';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminFiles from './pages/admin/AdminFiles';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminQuestions from './pages/admin/AdminQuestions';
+import AdminTemplateEditor from './pages/admin/AdminTemplateEditor';
 import EditSession from './pages/EditSession';
 const App: React.FC = () => {
   return (
@@ -33,6 +34,8 @@ const App: React.FC = () => {
         <Route path="/admin/users" element={<AdminUsers />} />
         <Route path="/admin/templates" element={<AdminTemplates />} />
         <Route path="/admin/files" element={<AdminFiles />} />
+        <Route path="/admin/questions" element={<AdminQuestions />} />
+        <Route path="/admin/template-editor" element={<AdminTemplateEditor />} />
         <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />

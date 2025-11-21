@@ -118,22 +118,74 @@ def get_template_version_full(db: Session, version_id: str):
     """
     Ritorna la versione con domini + domande già caricati.
     """
-    return (
+    from sqlalchemy.orm import joinedload
+    
+    # Carica version con template_domains e i loro domini
+    version = (
         db.query(models.TemplateVersion)
         .options(
             joinedload(models.TemplateVersion.template_domains)
-            .joinedload(models.TemplateDomain.domain),
-            joinedload(models.TemplateVersion.template_domains)
-            .joinedload(models.TemplateDomain.questions),
+            .joinedload(models.TemplateDomain.domain)
         )
         .filter(models.TemplateVersion.id == version_id)
         .first()
     )
+    
+    if not version:
+        return None
+    
+    # Carica tutte le questions per questa version
+    questions = (
+        db.query(models.Question)
+        .filter(models.Question.version_id == version_id)
+        .order_by(models.Question.order)
+        .all()
+    )
+    
+    # Raggruppa questions per domain_id
+    questions_by_domain = {}
+    for q in questions:
+        if q.domain_id not in questions_by_domain:
+            questions_by_domain[q.domain_id] = []
+        questions_by_domain[q.domain_id].append({
+            "id": str(q.id),
+            "code": q.code,
+            "text": q.text,
+            "help_text": q.help_text,
+            "process": q.process,
+            "activity": q.activity,
+            "category": q.category,
+            "dimension": q.dimension,
+            "order": q.order,
+            "max_score": q.max_score
+        })
+    
+    # Costruisci risposta
+    result = {
+        "id": str(version.id),
+        "template_id": str(version.template_id),
+        "version": version.version,
+        "is_active": version.is_active,
+        "is_deprecated": version.is_deprecated,
+        "created_at": version.created_at.isoformat(),
+        "domains": []
+    }
+    
+    for td in version.template_domains:
+        domain_data = {
+            "template_domain_id": str(td.id),
+            "domain_id": str(td.domain_id),
+            "domain_code": td.domain.code,
+            "domain_name": td.domain.name,
+            "order": td.order,
+            "weight": td.weight,
+            "questions": questions_by_domain.get(td.domain_id, [])
+        }
+        result["domains"].append(domain_data)
+    
+    return result
 
 
-# ===============================
-#  DOMINI
-# ===============================
 
 def add_domain_to_version(
     db: Session,

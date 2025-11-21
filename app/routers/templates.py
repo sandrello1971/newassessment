@@ -202,3 +202,83 @@ def deactivate_question(
     if not q:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Domanda non trovata")
     return {"status": "ok", "id": question_id, "is_active": q.is_active}
+
+
+@router.delete("/{template_id}", summary="Elimina template e tutte le sue versioni")
+def delete_template(template_id: str, db: Session = Depends(get_db)):
+    """
+    Elimina un template e tutte le sue versioni, domini e domande associate.
+    ATTENZIONE: Operazione irreversibile!
+    """
+    from app import models
+    from sqlalchemy import delete
+    
+    # Verifica che il template esista
+    template = db.query(models.AssessmentTemplate).filter(
+        models.AssessmentTemplate.id == template_id
+    ).first()
+    
+    if not template:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Template non trovato"
+        )
+    
+    # Verifica che non ci siano assessment attivi che usano questo template
+    active_assessments = db.query(models.AssessmentSession).filter(
+        models.AssessmentSession.template_id == template_id
+    ).count()
+    
+    if active_assessments > 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Impossibile eliminare: ci sono {active_assessments} assessment che usano questo template"
+        )
+    
+    try:
+        # Ottieni tutte le versioni del template
+        versions = db.query(models.TemplateVersion).filter(
+            models.TemplateVersion.template_id == template_id
+        ).all()
+        
+        version_ids = [v.id for v in versions]
+        
+        if version_ids:
+            # Elimina domande
+            db.execute(
+                delete(models.Question).where(
+                    models.Question.version_id.in_(version_ids)
+                )
+            )
+            
+            # Elimina template_domains
+            db.execute(
+                delete(models.TemplateDomain).where(
+                    models.TemplateDomain.version_id.in_(version_ids)
+                )
+            )
+            
+            # Elimina versioni
+            db.execute(
+                delete(models.TemplateVersion).where(
+                    models.TemplateVersion.template_id == template_id
+                )
+            )
+        
+        # Elimina template
+        db.delete(template)
+        db.commit()
+        
+        return {
+            "status": "ok",
+            "message": f"Template '{template.name}' eliminato con successo",
+            "deleted_versions": len(version_ids),
+            "template_id": template_id
+        }
+        
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Errore durante l'eliminazione: {str(e)}"
+        )

@@ -52,13 +52,47 @@ const TestTableFormByCategory = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Carica il model_name dalla sessione
+        // Carica sessione e version_id
         const sessionRes = await axios.get(`/api/assessment/session/${sessionId}`);
-        const modelName = sessionRes.data.model_name || 'i40_assessment_fto';
-        console.log('Loading model:', modelName);
+        const versionId = sessionRes.data.template_version_id;
         
-        const questionsRes = await axios.get(`/${modelName}.json`);
-        const data = Array.isArray(questionsRes.data) ? questionsRes.data : (questionsRes as any).data || questionsRes;
+        if (!versionId) {
+          console.error('❌ Nessun template_version_id nella sessione!');
+          setLoading(false);
+          return;
+        }
+        
+        console.log('🔄 Caricamento domande da DB, version:', versionId);
+        
+        // Carica domande dal DB
+        const questionsRes = await axios.get(`/api/admin/templates/versions/${versionId}`);
+        
+        // Trasforma formato DB in formato atteso
+        const data = questionsRes.data.domains.reduce((acc: any[], domain: any) => {
+          domain.questions.forEach((q: any) => {
+            let proc = acc.find(p => p.process === q.process);
+            if (!proc) {
+              proc = { process: q.process, activities: [] };
+              acc.push(proc);
+            }
+            
+            let act = proc.activities.find((a: any) => a.name === q.activity);
+            if (!act) {
+              act = { name: q.activity, categories: {} };
+              proc.activities.push(act);
+            }
+            
+            if (!act.categories[domain.domain_name]) {
+              act.categories[domain.domain_name] = {};
+            }
+            
+            act.categories[domain.domain_name][q.text] = q.max_score || 5;
+          });
+          
+          return acc;
+        }, []);
+        
+        console.log('✅ Domande caricate dal DB:', data.length, 'processi');
 
         const validProcesses = data.filter((p: ProcessData) => 
           p.activities && p.activities.length > 0

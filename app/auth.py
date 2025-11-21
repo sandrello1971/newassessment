@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from jose import jwt, JWTError
-from passlib.context import CryptContext
+import bcrypt
 from datetime import datetime, timedelta
 import os
 from . import models, database
@@ -12,10 +12,14 @@ ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def verify_password(plain, hashed):
-    return pwd_context.verify(plain, hashed)
+def verify_password(plain: str, hashed: str) -> bool:
+    """Verifica password usando bcrypt direttamente"""
+    return bcrypt.checkpw(plain.encode('utf-8'), hashed.encode('utf-8'))
+
+def hash_password(password: str) -> str:
+    """Hash password usando bcrypt"""
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 def get_user(db: Session, email: str):
     return db.query(models.LocalUser).filter(models.LocalUser.email == email).first()
@@ -45,6 +49,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
+    
     user = get_user(db, email)
     if user is None:
         raise credentials_exception

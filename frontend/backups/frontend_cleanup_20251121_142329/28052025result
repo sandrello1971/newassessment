@@ -1,0 +1,301 @@
+// src/pages/ResultsPage.tsx - Versione Aggiornata
+import React, { useEffect, useState } from 'react';
+
+interface ProcessRating {
+  process: string;
+  avg_score: number;
+  status: string;
+  level: number;
+}
+
+interface RadarData {
+  benchmarks: number;
+  ratings: ProcessRating[];
+  category_scores: {
+    governance: number;
+    monitoring_control: number;
+    technology: number;
+    organization: number;
+  };
+  total_processes: number;
+}
+
+// Usa questo nella tua pagina ResultsPage.tsx
+const ResultsPage: React.FC = () => {
+  const [radarData, setRadarData] = useState<RadarData | null>(null);
+  const [radarSvg, setRadarSvg] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>('');
+
+  // Ottieni sessionId dai parametri URL (adatta al tuo router)
+  const sessionId = 'ffdebb6e-b671-4193-96c9-c31180005701'; // O dall'URL params
+
+  useEffect(() => {
+    const loadResults = async () => {
+      try {
+        setLoading(true);
+        
+        // Carica dati radar completi
+        const radarResponse = await fetch(`/api/assessment/${sessionId}/radar`);
+        if (radarResponse.ok) {
+          const data = await radarResponse.json();
+          setRadarData(data);
+        }
+
+        // Carica radar SVG inline
+        const svgResponse = await fetch(`/api/assessment/${sessionId}/radar-svg`);
+        if (svgResponse.ok) {
+          const svg = await svgResponse.text();
+          setRadarSvg(svg);
+        }
+
+        // Carica suggerimenti AI
+        try {
+          const suggestionsResponse = await fetch(`/api/assessment/${sessionId}/ai-suggestions`);
+          if (suggestionsResponse.ok) {
+            const suggData = await suggestionsResponse.json();
+            setSuggestions(suggData.suggestions || 'Nessun suggerimento disponibile');
+          }
+        } catch (suggErr) {
+          console.warn('Suggerimenti non disponibili:', suggErr);
+          setSuggestions('Suggerimenti AI non disponibili al momento');
+        }
+
+      } catch (err) {
+        console.error('Errore nel caricamento risultati:', err);
+        setError('Errore nel caricamento dei risultati');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadResults();
+  }, [sessionId]);
+
+  if (loading) {
+    return (
+      <div className="p-8 text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <p className="mt-4">Caricamento risultati...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8 text-center">
+        <h2 className="text-xl font-bold text-red-600 mb-4">Errore</h2>
+        <p className="mb-4">{error}</p>
+        <button
+          onClick={() => window.location.href = '/dashboard'}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Torna alla Dashboard
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-8 max-w-7xl mx-auto">
+      <div className="flex items-center mb-8">
+        <button
+          onClick={() => window.location.href = '/dashboard'}
+          className="flex items-center text-blue-600 hover:text-blue-800 font-medium"
+        >
+          ← Dashboard
+        </button>
+      </div>
+
+      <h1 className="text-3xl font-bold mb-8 text-gray-800 flex items-center">
+        📊 Risultati Assessment Digitale 4.0
+      </h1>
+
+      {/* Radar Chart Principale - 4 Dimensioni del Politecnico di Milano */}
+      <div className="bg-white p-8 rounded-lg shadow-lg mb-8">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          🎯 Radar Assessment - Modello Politecnico di Milano
+        </h2>
+        <p className="text-center text-gray-600 mb-6">
+          Valutazione delle 4 dimensioni di maturità digitale per aziende manifatturiere
+        </p>
+        
+        {/* Radar SVG Inline */}
+        <div className="flex justify-center mb-6">
+          <div 
+            dangerouslySetInnerHTML={{ __html: radarSvg }}
+            className="border rounded-lg bg-gray-50 p-4"
+          />
+        </div>
+        
+        {/* Dettagli Punteggi per Dimensione */}
+        {radarData?.category_scores && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div className="text-center p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+              <h4 className="font-semibold text-blue-800">Process</h4>
+              <p className="text-3xl font-bold text-blue-600">
+                {radarData.category_scores.governance?.toFixed(1) || '0.0'}
+              </p>
+              <p className="text-sm text-gray-600">Governance</p>
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-blue-600 h-2 rounded-full" 
+                    style={{ width: `${((radarData.category_scores.governance || 0) / 5) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-green-50 rounded-lg border-l-4 border-green-400">
+              <h4 className="font-semibold text-green-800">Monitoring</h4>
+              <p className="text-3xl font-bold text-green-600">
+                {radarData.category_scores.monitoring_control?.toFixed(1) || '0.0'}
+              </p>
+              <p className="text-sm text-gray-600">& Control</p>
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-green-600 h-2 rounded-full" 
+                    style={{ width: `${((radarData.category_scores.monitoring_control || 0) / 5) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+              <h4 className="font-semibold text-purple-800">Technology</h4>
+              <p className="text-3xl font-bold text-purple-600">
+                {radarData.category_scores.technology?.toFixed(1) || '0.0'}
+              </p>
+              <p className="text-sm text-gray-600">Sistemi ICT</p>
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-purple-600 h-2 rounded-full" 
+                    style={{ width: `${((radarData.category_scores.technology || 0) / 5) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-orange-50 rounded-lg border-l-4 border-orange-400">
+              <h4 className="font-semibold text-orange-800">Organization</h4>
+              <p className="text-3xl font-bold text-orange-600">
+                {radarData.category_scores.organization?.toFixed(1) || '0.0'}
+              </p>
+              <p className="text-sm text-gray-600">Aspetti Org.</p>
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-orange-600 h-2 rounded-full" 
+                    style={{ width: `${((radarData.category_scores.organization || 0) / 5) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Legenda Livelli di Maturità */}
+        <div className="mt-8 p-6 bg-gray-50 rounded-lg">
+          <h4 className="font-semibold text-gray-800 mb-4 text-center">
+            📈 Livelli di Maturità Digitale - Modello Politecnico di Milano
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm">
+            <div className="text-center p-3 bg-white rounded-lg border-l-4 border-red-400">
+              <span className="font-bold text-red-600 text-lg">1 - Initial</span>
+              <p className="text-gray-600 mt-1">Processi poco controllati, gestione reattiva</p>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border-l-4 border-orange-400">
+              <span className="font-bold text-orange-600 text-lg">2 - Managed</span>
+              <p className="text-gray-600 mt-1">Processi parzialmente pianificati</p>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border-l-4 border-yellow-400">
+              <span className="font-bold text-yellow-600 text-lg">3 - Defined</span>
+              <p className="text-gray-600 mt-1">Implementazione di best practices</p>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border-l-4 border-blue-400">
+              <span className="font-bold text-blue-600 text-lg">4 - Integrated</span>
+              <p className="text-gray-600 mt-1">Processi integrati e standardizzati</p>
+            </div>
+            <div className="text-center p-3 bg-white rounded-lg border-l-4 border-green-400">
+              <span className="font-bold text-green-600 text-lg">5 - Digital</span>
+              <p className="text-gray-600 mt-1">Processi digitali e orientati al futuro</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Dettagli Valutazione per Processo */}
+      {radarData && (
+        <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+          <h3 className="text-xl font-bold mb-4 text-gray-800">📋 Dettagli Valutazione per Processo</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-gray-50">
+                  <th className="text-left p-4 font-semibold">Processo</th>
+                  <th className="text-center p-4 font-semibold">Punteggio Medio</th>
+                  <th className="text-center p-4 font-semibold">Stato</th>
+                  <th className="text-center p-4 font-semibold">Livello</th>
+                </tr>
+              </thead>
+              <tbody>
+                {radarData.ratings.map((rating, idx) => (
+                  <tr key={idx} className="border-b hover:bg-gray-50">
+                    <td className="p-4 font-medium">{rating.process}</td>
+                    <td className="p-4 text-center text-lg font-semibold">{rating.avg_score}</td>
+                    <td className="p-4 text-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        rating.status === 'OTTIMO' ? 'bg-green-100 text-green-800' :
+                        rating.status === 'BUONO' ? 'bg-blue-100 text-blue-800' :
+                        rating.status === 'SUFFICIENTE' ? 'bg-yellow-100 text-yellow-800' :
+                        rating.status === 'CARENTE' ? 'bg-orange-100 text-orange-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        ✅ {rating.status} {'⭐'.repeat(Math.max(1, rating.level))}
+                      </span>
+                    </td>
+                    <td className="p-4 text-center text-xl font-bold">
+                      {rating.level}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Suggerimenti AI per il Miglioramento */}
+      <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+        <h3 className="text-xl font-bold mb-4 text-gray-800">🤖 Suggerimenti AI per il Miglioramento</h3>
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <pre className="whitespace-pre-wrap text-sm text-gray-700">
+            {suggestions}
+          </pre>
+        </div>
+      </div>
+
+      {/* Azioni */}
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={() => window.location.href = `/assessment/${sessionId}`}
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold shadow-lg"
+        >
+          🔄 Modifica Assessment
+        </button>
+        <button
+          onClick={() => window.location.href = '/dashboard'}
+          className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-semibold shadow-lg"
+        >
+          ➕ Nuovo Assessment
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ResultsPage;

@@ -1,0 +1,400 @@
+import { useState, useEffect } from 'react';
+import { ArrowLeft, Plus, Trash2, Save, ChevronUp, ChevronDown, AlertCircle } from 'lucide-react';
+import axios from 'axios';
+
+interface Domain {
+  template_domain_id: string;
+  domain_id: string;
+  domain_code: string;
+  domain_name: string;
+  order: number;
+  weight: number;
+  questions: Question[];
+}
+
+interface Question {
+  id: string;
+  code: string;
+  text: string;
+  help_text: string | null;
+  process: string;
+  activity: string;
+  category: string;
+  dimension: string;
+  order: number;
+  max_score: number;
+}
+
+interface Template {
+  id: string;
+  code: string;
+  name: string;
+  sector: string;
+  description: string;
+}
+
+interface TemplateVersion {
+  id: string;
+  template_id: string;
+  version: number;
+  is_active: boolean;
+  domains: Domain[];
+}
+
+const AdminTemplateEditor = () => {
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+  const [versionData, setVersionData] = useState<TemplateVersion | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [activeTab, setActiveTab] = useState<'domains' | 'processes'>('domains');
+  const [activeDomainIndex, setActiveDomainIndex] = useState(0);
+
+  // Load templates list
+  useEffect(() => {
+    loadTemplates();
+  }, []);
+
+  // Load version when template selected
+  useEffect(() => {
+    if (selectedTemplateId) {
+      loadTemplateVersion();
+    }
+  }, [selectedTemplateId]);
+
+  // Block navigation with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
+  const loadTemplates = async () => {
+    try {
+      const res = await axios.get('/api/admin/templates/');
+      setTemplates(res.data);
+      if (res.data.length > 0) {
+        setSelectedTemplateId(res.data[0].id);
+      }
+    } catch (err) {
+      console.error('Errore caricamento templates:', err);
+      alert('Errore nel caricamento dei template');
+    }
+  };
+
+  const loadTemplateVersion = async () => {
+    setLoading(true);
+    try {
+      // Get versions for template
+      const versionsRes = await axios.get(`/api/admin/templates/${selectedTemplateId}/versions`);
+      const versions = versionsRes.data;
+      
+      if (versions.length === 0) {
+        alert('Nessuna versione trovata per questo template');
+        setVersionData(null);
+        return;
+      }
+
+      // Load first active version
+      const activeVersion = versions.find((v: any) => v.is_active) || versions[0];
+      
+      // Get full version data with domains and questions
+      const versionRes = await axios.get(`/api/admin/templates/versions/${activeVersion.id}`);
+      setVersionData(versionRes.data);
+      setHasUnsavedChanges(false);
+    } catch (err) {
+      console.error('Errore caricamento versione:', err);
+      alert('Errore nel caricamento della versione');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Domain Questions Management
+  const addQuestion = (domainIndex: number) => {
+    const text = prompt('Testo della domanda:');
+    if (!text) return;
+
+    const newVersion = { ...versionData! };
+    const domain = newVersion.domains[domainIndex];
+    
+    const newQuestion: Question = {
+      id: `temp_${Date.now()}`,
+      code: `q_${domain.questions.length + 1}`,
+      text,
+      help_text: null,
+      process: '',
+      activity: '',
+      category: domain.domain_name,
+      dimension: text,
+      order: domain.questions.length + 1,
+      max_score: 5
+    };
+
+    domain.questions.push(newQuestion);
+    setVersionData(newVersion);
+    setHasUnsavedChanges(true);
+  };
+
+  const editQuestion = (domainIndex: number, questionIndex: number) => {
+    const domain = versionData!.domains[domainIndex];
+    const oldText = domain.questions[questionIndex].text;
+    const newText = prompt('Modifica testo:', oldText);
+    
+    if (newText && newText !== oldText) {
+      const newVersion = { ...versionData! };
+      newVersion.domains[domainIndex].questions[questionIndex].text = newText;
+      newVersion.domains[domainIndex].questions[questionIndex].dimension = newText;
+      setVersionData(newVersion);
+      setHasUnsavedChanges(true);
+    }
+  };
+
+  const removeQuestion = (domainIndex: number, questionIndex: number) => {
+    if (!confirm('Eliminare questa domanda?')) return;
+
+    const newVersion = { ...versionData! };
+    newVersion.domains[domainIndex].questions.splice(questionIndex, 1);
+    
+    // Reorder remaining questions
+    newVersion.domains[domainIndex].questions.forEach((q, idx) => {
+      q.order = idx + 1;
+    });
+
+    setVersionData(newVersion);
+    setHasUnsavedChanges(true);
+  };
+
+  const moveQuestion = (domainIndex: number, questionIndex: number, direction: 'up' | 'down') => {
+    const newVersion = { ...versionData! };
+    const questions = newVersion.domains[domainIndex].questions;
+    
+    const newIndex = direction === 'up' ? questionIndex - 1 : questionIndex + 1;
+    if (newIndex < 0 || newIndex >= questions.length) return;
+
+    [questions[questionIndex], questions[newIndex]] = [questions[newIndex], questions[questionIndex]];
+    
+    // Update order
+    questions.forEach((q, idx) => {
+      q.order = idx + 1;
+    });
+
+    setVersionData(newVersion);
+    setHasUnsavedChanges(true);
+  };
+
+  const saveChanges = async () => {
+    if (!versionData) return;
+
+    try {
+      // TODO: Implement save API calls
+      // For now, just alert
+      alert('Funzionalità di salvataggio in fase di implementazione');
+      setHasUnsavedChanges(false);
+    } catch (err) {
+      console.error('Errore salvataggio:', err);
+      alert('Errore durante il salvataggio');
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-600">Caricamento...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  if (hasUnsavedChanges) {
+                    if (confirm('Hai modifiche non salvate. Vuoi uscire?')) {
+                      window.history.back();
+                    }
+                  } else {
+                    window.history.back();
+                  }
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Editor Template {hasUnsavedChanges && <span className="text-red-500">*</span>}
+              </h1>
+            </div>
+            <div className="flex gap-3 items-center">
+              <select
+                value={selectedTemplateId}
+                onChange={(e) => setSelectedTemplateId(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg"
+              >
+                {templates.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={saveChanges}
+                disabled={!hasUnsavedChanges}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              >
+                <Save className="w-4 h-4" />
+                Salva
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-4 mt-4 border-b">
+            <button
+              onClick={() => setActiveTab('domains')}
+              className={`px-4 py-2 font-medium ${
+                activeTab === 'domains'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600'
+              }`}
+            >
+              Domini e Domande
+            </button>
+            <button
+              onClick={() => setActiveTab('processes')}
+              className={`px-4 py-2 font-medium ${
+                activeTab === 'processes'
+                  ? 'border-b-2 border-blue-600 text-blue-600'
+                  : 'text-gray-600'
+              }`}
+            >
+              Processi e Attività
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Warning unsaved */}
+      {hasUnsavedChanges && (
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-yellow-600" />
+            <span className="text-yellow-800">Hai modifiche non salvate</span>
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {!versionData ? (
+          <div className="text-center text-gray-500 py-12">
+            Seleziona un template per iniziare
+          </div>
+        ) : activeTab === 'domains' ? (
+          <div className="bg-white rounded-lg shadow-sm">
+            {/* Domain tabs */}
+            <div className="flex gap-2 p-4 border-b overflow-x-auto">
+              {versionData.domains.map((domain, idx) => (
+                <button
+                  key={domain.domain_id}
+                  onClick={() => setActiveDomainIndex(idx)}
+                  className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap ${
+                    activeDomainIndex === idx
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {domain.domain_name}
+                  <span className="ml-2 text-xs">({domain.questions.length})</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Questions list */}
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">
+                  {versionData.domains[activeDomainIndex].domain_name}
+                </h3>
+                <button
+                  onClick={() => addQuestion(activeDomainIndex)}
+                  className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4" />
+                  Aggiungi Domanda
+                </button>
+              </div>
+
+                            <div className="space-y-2">
+                {versionData.domains[activeDomainIndex].questions.map((question, qIdx) => (
+                  <div
+                    key={question.id}
+                    className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 group"
+                  >
+                    <div className="flex-1">
+                      <div className="text-sm text-gray-500 mb-1">
+                        <span className="font-medium">{question.process}</span>
+                        {question.activity && <span> → {question.activity}</span>}
+                      </div>
+                      <div className="text-gray-700">{question.text}</div>
+                    </div>
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => moveQuestion(activeDomainIndex, qIdx, 'up')}
+                        disabled={qIdx === 0}
+                        className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                        title="Sposta su"
+                      >
+                        <ChevronUp className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => moveQuestion(activeDomainIndex, qIdx, 'down')}
+                        disabled={qIdx === versionData.domains[activeDomainIndex].questions.length - 1}
+                        className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                        title="Sposta giù"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => editQuestion(activeDomainIndex, qIdx)}
+                        className="p-2 text-blue-600 hover:bg-blue-100 rounded"
+                        title="Modifica"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => removeQuestion(activeDomainIndex, qIdx)}
+                        className="p-2 text-red-600 hover:bg-red-100 rounded"
+                        title="Elimina"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+            Gestione Processi e Attività - In fase di implementazione
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AdminTemplateEditor;

@@ -1,0 +1,825 @@
+import { useState, useEffect } from 'react';
+import { ArrowLeft, Plus, Trash2, Save, ChevronUp, ChevronDown, AlertCircle, Edit2 } from 'lucide-react';
+import axios from 'axios';
+
+
+interface Domain {
+  id: string;
+  code: string;
+  name: string;
+  order: number;
+  questions: string[];
+}
+
+interface Process {
+  name: string;
+  activities: string[];
+}
+
+interface Template {
+  id: string;
+  code: string;
+  name: string;
+  sector: string;
+}
+
+const AdminTemplateEditor = () => {
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+  const [_versionId, setVersionId] = useState<string>('');
+  const [saveAsNew, setSaveAsNew] = useState(false);
+  const [newTemplateName, setNewTemplateName] = useState('');
+  
+  // Domini con loro domande
+  const [domains, setDomains] = useState<Domain[]>([]);
+  const [activeDomainIndex, setActiveDomainIndex] = useState(0);
+  
+  // Processi e attività
+  const [processes, setProcesses] = useState<Process[]>([]);
+  const [selectedProcessIndex, setSelectedProcessIndex] = useState<number | null>(null);
+  
+  const [loading, setLoading] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [activeTab, setActiveTab] = useState<'domains' | 'processes'>('domains');
+
+  useEffect(() => {
+    loadTemplates();
+  }, []);
+
+  useEffect(() => {
+    if (selectedTemplateId) {
+      loadTemplateData();
+    }
+  }, [selectedTemplateId]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges]);
+
+  const loadTemplates = async () => {
+    try {
+      const res = await axios.get('/api/admin/templates/');
+      setTemplates(res.data);
+      if (res.data.length > 0) {
+        setSelectedTemplateId(res.data[0].id);
+      }
+    } catch (err) {
+      console.error('Errore caricamento templates:', err);
+    }
+  };
+
+  const loadTemplateData = async () => {
+    setLoading(true);
+    try {
+      const versionsRes = await axios.get(`/api/admin/templates/${selectedTemplateId}/versions`);
+      const versions = versionsRes.data;
+      if (versions.length === 0) {
+        setLoading(false);
+        return;
+      }
+      
+      const activeVersion = versions.find((v: any) => v.is_active) || versions[0];
+      setVersionId(activeVersion.id);
+      
+      const versionRes = await axios.get(`/api/admin/templates/versions/${activeVersion.id}`);
+      const data = versionRes.data;
+      
+      // Estrai domini
+      const domainsData: Domain[] = data.domains.map((d: any) => {
+        // Estrai domande UNICHE per questo dominio
+        const uniqueQuestions = new Set<string>();
+        d.questions.forEach((q: any) => {
+          uniqueQuestions.add(q.text);
+        });
+        
+        return {
+          id: d.domain_id,
+          code: d.domain_code,
+          name: d.domain_name,
+          order: d.order,
+          questions: Array.from(uniqueQuestions)
+        };
+      });
+      
+      setDomains(domainsData);
+      
+      // Estrai processi e attività UNICI
+      const processMap = new Map<string, Set<string>>();
+      
+      data.domains.forEach((domain: any) => {
+        domain.questions.forEach((q: any) => {
+          if (q.process) {
+            if (!processMap.has(q.process)) {
+              processMap.set(q.process, new Set());
+            }
+            if (q.activity) {
+              processMap.get(q.process)!.add(q.activity);
+            }
+          }
+        });
+      });
+      
+      const processesData: Process[] = Array.from(processMap.entries()).map(([name, activities]) => ({
+        name,
+        activities: Array.from(activities)
+      }));
+      
+      setProcesses(processesData);
+      setHasUnsavedChanges(false);
+      
+    } catch (err) {
+      console.error('Errore caricamento dati:', err);
+      alert('Errore nel caricamento dei dati');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ==================== DOMAIN MANAGEMENT ====================
+  
+  const addDomain = () => {
+    const name = prompt('Nome del nuovo dominio:');
+    if (!name) return;
+    
+    const newDomain: Domain = {
+      id: `temp_${Date.now()}`,
+      code: name.toLowerCase().replace(/\s+/g, '_'),
+      name,
+      order: domains.length + 1,
+      questions: []
+    };
+    
+    setDomains([...domains, newDomain]);
+    setHasUnsavedChanges(true);
+  };
+
+  const editDomainName = (index: number) => {
+    const oldName = domains[index].name;
+    const newName = prompt('Modifica nome dominio:', oldName);
+    if (!newName || newName === oldName) return;
+    
+    const updated = [...domains];
+    updated[index].name = newName;
+    updated[index].code = newName.toLowerCase().replace(/\s+/g, '_');
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const removeDomain = (index: number) => {
+    if (!confirm(`Eliminare il dominio "${domains[index].name}"?`)) return;
+    
+    const updated = domains.filter((_, i) => i !== index);
+    updated.forEach((d, i) => d.order = i + 1);
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+    
+    if (activeDomainIndex >= updated.length) {
+      setActiveDomainIndex(Math.max(0, updated.length - 1));
+    }
+  };
+
+  const moveDomain = (index: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= domains.length) return;
+    
+    const updated = [...domains];
+    [updated[index], updated[newIndex]] = [updated[newIndex], updated[index]];
+    updated.forEach((d, i) => d.order = i + 1);
+    
+    setDomains(updated);
+    setActiveDomainIndex(newIndex);
+    setHasUnsavedChanges(true);
+  };
+
+  // ==================== QUESTION MANAGEMENT ====================
+  
+  const addQuestion = () => {
+    const text = prompt('Testo della domanda:');
+    if (!text) return;
+    
+    const updated = [...domains];
+    updated[activeDomainIndex].questions.push(text);
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const editQuestion = (qIndex: number) => {
+    const oldText = domains[activeDomainIndex].questions[qIndex];
+    const newText = prompt('Modifica domanda:', oldText);
+    if (!newText || newText === oldText) return;
+    
+    const updated = [...domains];
+    updated[activeDomainIndex].questions[qIndex] = newText;
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const removeQuestion = (qIndex: number) => {
+    if (!confirm('Eliminare questa domanda?')) return;
+    
+    const updated = [...domains];
+    updated[activeDomainIndex].questions.splice(qIndex, 1);
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const moveQuestion = (qIndex: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? qIndex - 1 : qIndex + 1;
+    const questions = domains[activeDomainIndex].questions;
+    if (newIndex < 0 || newIndex >= questions.length) return;
+    
+    const updated = [...domains];
+    [updated[activeDomainIndex].questions[qIndex], updated[activeDomainIndex].questions[newIndex]] = 
+    [updated[activeDomainIndex].questions[newIndex], updated[activeDomainIndex].questions[qIndex]];
+    
+    setDomains(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  // ==================== PROCESS MANAGEMENT ====================
+  
+  const addProcess = () => {
+    const name = prompt('Nome del nuovo processo:');
+    if (!name) return;
+    
+    setProcesses([...processes, { name, activities: [] }]);
+    setHasUnsavedChanges(true);
+  };
+
+  const editProcessName = (index: number) => {
+    const oldName = processes[index].name;
+    const newName = prompt('Modifica nome processo:', oldName);
+    if (!newName || newName === oldName) return;
+    
+    const updated = [...processes];
+    updated[index].name = newName;
+    setProcesses(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const removeProcess = (index: number) => {
+    if (!confirm(`Eliminare il processo "${processes[index].name}"?`)) return;
+    
+    setProcesses(processes.filter((_, i) => i !== index));
+    if (selectedProcessIndex === index) {
+      setSelectedProcessIndex(null);
+    }
+    setHasUnsavedChanges(true);
+  };
+
+  const moveProcess = (index: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= processes.length) return;
+    
+    const updated = [...processes];
+    [updated[index], updated[newIndex]] = [updated[newIndex], updated[index]];
+    setProcesses(updated);
+    
+    if (selectedProcessIndex === index) {
+      setSelectedProcessIndex(newIndex);
+    } else if (selectedProcessIndex === newIndex) {
+      setSelectedProcessIndex(index);
+    }
+    setHasUnsavedChanges(true);
+  };
+
+  // ==================== ACTIVITY MANAGEMENT ====================
+  
+  const addActivity = () => {
+    if (selectedProcessIndex === null) return;
+    
+    const name = prompt('Nome della nuova attività:');
+    if (!name) return;
+    
+    const updated = [...processes];
+    updated[selectedProcessIndex].activities.push(name);
+    setProcesses(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const editActivityName = (actIndex: number) => {
+    if (selectedProcessIndex === null) return;
+    
+    const oldName = processes[selectedProcessIndex].activities[actIndex];
+    const newName = prompt('Modifica nome attività:', oldName);
+    if (!newName || newName === oldName) return;
+    
+    const updated = [...processes];
+    updated[selectedProcessIndex].activities[actIndex] = newName;
+    setProcesses(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const removeActivity = (actIndex: number) => {
+    if (selectedProcessIndex === null) return;
+    if (!confirm('Eliminare questa attività?')) return;
+    
+    const updated = [...processes];
+    updated[selectedProcessIndex].activities.splice(actIndex, 1);
+    setProcesses(updated);
+    setHasUnsavedChanges(true);
+  };
+
+  const moveActivity = (actIndex: number, direction: 'up' | 'down') => {
+    if (selectedProcessIndex === null) return;
+    
+    const newIndex = direction === 'up' ? actIndex - 1 : actIndex + 1;
+    const activities = processes[selectedProcessIndex].activities;
+    if (newIndex < 0 || newIndex >= activities.length) return;
+    
+    const updated = [...processes];
+    [updated[selectedProcessIndex].activities[actIndex], updated[selectedProcessIndex].activities[newIndex]] = 
+    [updated[selectedProcessIndex].activities[newIndex], updated[selectedProcessIndex].activities[actIndex]];
+    
+    setProcesses(updated);
+    setHasUnsavedChanges(true);
+  };
+
+    const deleteTemplate = async () => {
+    if (!selectedTemplateId) return;
+    
+    const template = templates.find(t => t.id === selectedTemplateId);
+    if (!template) return;
+    
+    if (!confirm(`Sei sicuro di voler eliminare il template "${template.name}"?
+
+Questa azione è irreversibile e cancellerà anche tutte le versioni e domande associate.`)) {
+      return;
+    }
+
+    try {
+      await axios.delete(`/api/admin/templates/${selectedTemplateId}`);
+      
+      alert(`Template "${template.name}" eliminato con successo!`);
+      
+      // Ricarica lista templates
+      await loadTemplates();
+      
+      // Se non ci sono più template, resetta
+      if (templates.length <= 1) {
+        setDomains([]);
+        setProcesses([]);
+        setSelectedTemplateId('');
+      }
+      
+    } catch (err: any) {
+      console.error('Errore eliminazione:', err);
+      const errorMsg = err.response?.data?.detail || err.message;
+      alert(`Errore durante l'eliminazione: ${errorMsg}`);
+    }
+  };
+
+  const saveChanges = async () => {
+    if (saveAsNew && !newTemplateName.trim()) {
+      alert('Inserisci un nome per il nuovo template');
+      return;
+    }
+
+    try {
+      let targetTemplateId = selectedTemplateId;
+      let targetVersionId = _versionId;
+      
+      // Se salva come nuovo, crea template e versione
+      if (saveAsNew) {
+        const selectedTemplate = templates.find(t => t.id === selectedTemplateId);
+        
+        // 1. Crea nuovo template
+        const createRes = await axios.post('/api/admin/templates/', {
+          code: newTemplateName.trim().toLowerCase().replace(/\s+/g, '_'),
+          name: newTemplateName.trim(),
+          description: `Creato da ${selectedTemplate?.name || 'template'}`,
+          sector: selectedTemplate?.sector || 'General',
+          is_active: true
+        });
+        
+        targetTemplateId = createRes.data.id;
+        
+        // 2. Crea versione
+        const versionRes = await axios.post(`/api/admin/templates/${targetTemplateId}/versions`, {
+          version_label: 'v1',
+          status: 'active'
+        });
+        
+        targetVersionId = versionRes.data.id;
+      }
+
+      // 3. Aggiungi domini alla versione
+      for (const domain of domains) {
+        const domainRes = await axios.post(
+          `/api/admin/templates/versions/${targetVersionId}/domains`,
+          {
+            domain_name: domain.name,
+            description: `Dominio ${domain.name}`,
+            order: domain.order,
+            weight: 1.0
+          }
+        );
+        
+        const templateDomainId = domainRes.data.id;
+        
+        // 4. Aggiungi domande per ogni combinazione processo/attività
+        let questionOrder = 1;
+        for (const proc of processes) {
+          for (const activity of proc.activities) {
+            for (const question of domain.questions) {
+              await axios.post(
+                `/api/admin/templates/template-domains/${templateDomainId}/questions`,
+                {
+                  text: question,
+                  help_text: null,
+                  process: proc.name,
+                  activity: activity,
+                  category: domain.name,
+                  dimension: question,
+                  max_score: 5,
+                  order: questionOrder++,
+                  is_active: true
+                }
+              );
+            }
+          }
+        }
+      }
+
+      alert(saveAsNew ? 'Nuovo template creato con successo!' : 'Template salvato con successo!');
+      setHasUnsavedChanges(false);
+      setSaveAsNew(false);
+      setNewTemplateName('');
+      
+      await loadTemplates();
+      if (saveAsNew) {
+        setSelectedTemplateId(targetTemplateId);
+      } else {
+        await loadTemplateData();
+      }
+
+    } catch (err: any) {
+      console.error('Errore salvataggio:', err);
+      alert(`Errore: ${err.response?.data?.detail || err.message}`);
+    }
+  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-600">Caricamento...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  if (hasUnsavedChanges && !confirm('Hai modifiche non salvate. Vuoi uscire?')) return;
+                  window.history.back();
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Editor Template {hasUnsavedChanges && <span className="text-red-500">*</span>}
+              </h1>
+            </div>
+            <div className="flex gap-3 items-center">
+              <select
+                value={selectedTemplateId}
+                onChange={(e) => setSelectedTemplateId(e.target.value)}
+                className="px-3 py-2 border rounded-lg"
+              >
+                {templates.map((t) => (
+                  <option key={t.id} value={t.id}>{t.name}</option>
+                ))}
+              </select>
+              
+              <div className="flex items-center gap-2 border-l pl-3">
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={saveAsNew}
+                    onChange={(e) => setSaveAsNew(e.target.checked)}
+                    className="rounded"
+                  />
+                  Salva come nuovo
+                </label>
+                {saveAsNew && (
+                  <input
+                    type="text"
+                    value={newTemplateName}
+                    onChange={(e) => setNewTemplateName(e.target.value)}
+                    placeholder="Nome nuovo template"
+                    className="px-3 py-2 border rounded-lg"
+                  />
+                )}
+              </div>
+              
+              <button
+                onClick={saveChanges}
+                disabled={!hasUnsavedChanges || (saveAsNew && !newTemplateName.trim())}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              >
+                <Save className="w-4 h-4" />
+                {saveAsNew ? 'Salva Nuovo' : 'Salva'}
+              </button>
+              <button
+                onClick={deleteTemplate}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                title="Elimina template"
+              >
+                <Trash2 className="w-4 h-4" />
+                Elimina
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-4 mt-4 border-b">
+            <button
+              onClick={() => setActiveTab('domains')}
+              className={`px-4 py-2 font-medium ${
+                activeTab === 'domains' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'
+              }`}
+            >
+              Domini e Domande
+            </button>
+            <button
+              onClick={() => setActiveTab('processes')}
+              className={`px-4 py-2 font-medium ${
+                activeTab === 'processes' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-600'
+              }`}
+            >
+              Processi e Attività
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Warning */}
+      {hasUnsavedChanges && (
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-center gap-2">
+            <AlertCircle className="w-5 h-5 text-yellow-600" />
+            <span className="text-yellow-800">Hai modifiche non salvate</span>
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        {domains.length === 0 ? (
+          <div className="text-center text-gray-500 py-12">Caricamento dati...</div>
+        ) : activeTab === 'domains' ? (
+          <div className="bg-white rounded-lg shadow-sm">
+            {/* Domain tabs con gestione */}
+            <div className="flex items-center gap-2 p-4 border-b overflow-x-auto">
+              <div className="flex gap-2 flex-1">
+                {domains.map((domain, idx) => (
+                  <div key={domain.id} className="flex items-center gap-1">
+                    <button
+                      onClick={() => setActiveDomainIndex(idx)}
+                      className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap ${
+                        activeDomainIndex === idx
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {domain.name}
+                      <span className="ml-2 text-xs">({domain.questions.length})</span>
+                    </button>
+                    {activeDomainIndex === idx && (
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => moveDomain(idx, 'up')}
+                          disabled={idx === 0}
+                          className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                          title="Sposta su"
+                        >
+                          <ChevronUp className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => moveDomain(idx, 'down')}
+                          disabled={idx === domains.length - 1}
+                          className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                          title="Sposta giù"
+                        >
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => editDomainName(idx)}
+                          className="p-1 hover:bg-blue-100 rounded text-blue-600"
+                          title="Modifica nome"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => removeDomain(idx)}
+                          className="p-1 hover:bg-red-100 rounded text-red-600"
+                          title="Elimina"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={addDomain}
+                className="p-2 hover:bg-gray-100 rounded"
+                title="Aggiungi dominio"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Questions */}
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">{domains[activeDomainIndex].name}</h3>
+                <button
+                  onClick={addQuestion}
+                  className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4" />
+                  Aggiungi Domanda
+                </button>
+              </div>
+
+              <div className="space-y-2">
+                {domains[activeDomainIndex].questions.map((question, qIdx) => (
+                  <div
+                    key={qIdx}
+                    className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 group"
+                  >
+                    <span className="flex-1 text-gray-700">{question}</span>
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button
+                        onClick={() => moveQuestion(qIdx, 'up')}
+                        disabled={qIdx === 0}
+                        className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                      >
+                        <ChevronUp className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => moveQuestion(qIdx, 'down')}
+                        disabled={qIdx === domains[activeDomainIndex].questions.length - 1}
+                        className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                      >
+                        <ChevronDown className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => editQuestion(qIdx)}
+                        className="p-2 text-blue-600 hover:bg-blue-100 rounded"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => removeQuestion(qIdx)}
+                        className="p-2 text-red-600 hover:bg-red-100 rounded"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* PROCESSES TAB */
+          <div className="grid grid-cols-12 gap-6">
+            {/* Processes sidebar */}
+            <div className="col-span-4 bg-white rounded-lg shadow-sm p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold">Processi</h2>
+                <button onClick={addProcess} className="p-1 hover:bg-gray-100 rounded">
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="space-y-2">
+                {processes.map((proc, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-lg cursor-pointer ${
+                      selectedProcessIndex === idx
+                        ? 'bg-blue-50 border-2 border-blue-500'
+                        : 'bg-gray-50 hover:bg-gray-100'
+                    }`}
+                    onClick={() => setSelectedProcessIndex(idx)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">{proc.name}</span>
+                      {selectedProcessIndex === idx && (
+                        <div className="flex gap-1">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); moveProcess(idx, 'up'); }}
+                            disabled={idx === 0}
+                            className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                          >
+                            <ChevronUp className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); moveProcess(idx, 'down'); }}
+                            disabled={idx === processes.length - 1}
+                            className="p-1 hover:bg-gray-200 rounded disabled:opacity-30"
+                          >
+                            <ChevronDown className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); editProcessName(idx); }}
+                            className="p-1 hover:bg-blue-100 rounded text-blue-600"
+                          >
+                            <Edit2 className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); removeProcess(idx); }}
+                            className="p-1 hover:bg-red-100 rounded text-red-600"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">{proc.activities.length} attività</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Activities */}
+            <div className="col-span-8">
+              {selectedProcessIndex !== null ? (
+                <div className="bg-white rounded-lg shadow-sm p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold">Attività di {processes[selectedProcessIndex].name}</h3>
+                    <button
+                      onClick={addActivity}
+                      className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Aggiungi Attività
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {processes[selectedProcessIndex].activities.map((activity, actIdx) => (
+                      <div key={actIdx} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg group">
+                        <span className="flex-1">{activity}</span>
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button
+                            onClick={() => moveActivity(actIdx, 'up')}
+                            disabled={actIdx === 0}
+                            className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                          >
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => moveActivity(actIdx, 'down')}
+                            disabled={actIdx === processes[selectedProcessIndex!].activities.length - 1}
+                            className="p-2 hover:bg-gray-200 rounded disabled:opacity-30"
+                          >
+                            <ChevronDown className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => editActivityName(actIdx)}
+                            className="p-2 text-blue-600 hover:bg-blue-100 rounded"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => removeActivity(actIdx)}
+                            className="p-2 text-red-600 hover:bg-red-100 rounded"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+                  Seleziona un processo per vedere le attività
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AdminTemplateEditor;

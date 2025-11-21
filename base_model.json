@@ -1,0 +1,1522 @@
+[
+  {
+    "process": "MKTG",
+    "activities": [
+      {
+        "name": "attività di marketing",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "contacts /leadings",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "profilazione",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "analisi domanda / offerta",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "benchmarking",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "tracking degli ordini / prenotazioni",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione customer satisfaction",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "promozione tramite website",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "promozione tramite social media",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "promozione tramite app",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "DESIGN & ENGINEERING (tour tailor made)",
+    "activities": [
+      {
+        "name": "scouting della disponibilità dell'offerta",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione accordi con strutture / associazioni / privati",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione rischi:  assicurative",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione rischi:  legale",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione rischi: cyber",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "EXECUTION (in agenzia)",
+    "activities": [
+      {
+        "name": "accoglienza",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "registrazione",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "profilazione",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione della richiesta",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "ricerca/costruzione dell'esperienza",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "preventivo",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "acquisto",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "delivery (vs strutture / tour operators)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "QUALITY MANAGEMENT",
+    "activities": [
+      {
+        "name": "pianificazione delle attività",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione di best practices, procedure, flusso dei processi interni",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione della documentazione",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione delle azioni di miglioramento",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione delle azioni correttive",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione dei dati (conformità GDPR)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione dei dati (sicurezza accessi, antivirus, on-premise/cloud)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "CUSTOMER CARE",
+    "activities": [
+      {
+        "name": "gestione del cliente dopo il primo contatto",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione del cliente a seguito della firma del contratto",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione del cliente durante il viaggio",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "intervista del cliente dopo il viaggio",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "contatto periodico con i clienti per l'invio di nuove offerte profilate",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "DIGITAL MKTG",
+    "activities": [
+      {
+        "name": "Attività di Digital Advertising (Brand Protection - Generic Keywords) - by G",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Analisi dei visitatori attraverso Google Analytics",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Cruscotti di monitoraggio",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Analisi dei flussi di comportamento degli utenti (link di provenienza)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Attività di Advertising Locali (per catturare prospect locali)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Gestione delle Attività di retargeting (recupero utenti su social e website)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Analisi Search Console - by G",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Definizione di un Piano Strategico e Tattico SEO",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Piano editoriale digitale (Comunicazione e promozione)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Attivazione di Campagne Nazionali e/o Internazionali",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Gestione di Attività Digital PR (es. Referral SEO)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Gestione Ordini e prenotazioni online",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "Sicurezza accessi piattafrome (es. doppia autenticazione)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "process": "ADMINISTRATION",
+    "activities": [
+      {
+        "name": "gestione (specificare se interna / esterna)",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "controllo di gestione",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "analisi finanziaria",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "pianificazione strategica",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "gestione dei pagamenti digitali",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "firma elettronica su contrattualistica",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      },
+      {
+        "name": "utilizzo sistematico dei siti istituzionali con accesso tramite SPID /CieID",
+        "categories": {
+          "Governance": {
+            "In quale misura sono presenti Best Practices / Procedure / Metodi di processo?": 1,
+            "Qual è il livello di standardizzazione e di ottimizzazione del processo?": 1,
+            "Le informazioni sono tracciate e utilizzate all'interno del processo e come?": 1,
+            "Qual è il livello di integrazione con gli altri processi?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati?": 1
+          },
+          "Monitoring & Control": {
+            "In che misura il processo tende verso il miglioramento continuo?": 1,
+            "In che misura il processo è in grado di riconfigurarsi dopo che si sono verificate delle modifiche?": 1,
+            "In che misura e in quale modo le prestazioni dei processi vengono rilevate e utilizzate per l’analisi?": 1,
+            "Quanto le decisioni sono guidate e supportate dai feed-back e come viene svolto il processo decisionale?": 1
+          },
+          "Technology": {
+            "In che misura i sistemi di supporto al processo sono standardizzati e integrati?": 1,
+            "In che misura il processo è automatizzato?": 1,
+            "In che misura i dati di processo sono raccolti ed archiviati in modo digitale?": 1
+          },
+          "Organization": {
+            "Qual è ilvello di consapevolezza sulle responsabilità del processo? Quali sono le responsabilità e di chi?": 1,
+            "Qual è il livello di collaborazione tra i processi? Esiste un organigramma?": 1
+          }
+        }
+      }
+    ]
+  }
+]

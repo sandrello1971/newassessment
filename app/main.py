@@ -14,7 +14,7 @@ from app.routers import excel_export
 
 # ✅ Init FastAPI app
 app = FastAPI()
-app.include_router(templates.router)
+app.include_router(templates.router, prefix="/api")
 
 # ✅ Middleware CORS
 app.add_middleware(

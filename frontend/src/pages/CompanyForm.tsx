@@ -12,6 +12,7 @@ interface CompanyData {
   user_id?: string;
   company_id?: number;
   model_name?: string;
+  template_id?: string;
   template_version_id?: string;
 }
 
@@ -47,23 +48,39 @@ const CompanyForm = () => {
       }
     };
     loadTemplates();
-  });
+  }, []); // ← Esegui solo al mount
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [assessmentMode, setAssessmentMode] = useState<'manual' | 'ai'>('manual');
-  const [models, setModels] = useState<Array<{name: string; filename: string; is_default: boolean}>>([]);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>('');
 
-  useEffect(() => {
-    axios.get('/api/admin/list-models')
-      .then(res => setModels(res.data.models))
-      .catch(err => console.error('Errore caricamento modelli:', err));
-  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // Se cambia il template, carica la versione attiva
+    if (name === 'template_id' && value) {
+      try {
+        const versionsRes = await axios.get(`/api/admin/templates/${value}/versions`);
+        const activeVersion = versionsRes.data.find((v: any) => v.is_active) || versionsRes.data[0];
+        
+        if (activeVersion) {
+          const selectedTemplate = templates.find(t => t.id === value);
+          setFormData(prev => ({
+            ...prev,
+            template_id: value,
+            template_version_id: activeVersion.id,
+            model_name: selectedTemplate?.code || 'i40_assessment_fto'
+          }));
+          return;
+        }
+      } catch (err) {
+        console.error('Errore caricamento versione:', err);
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [name]: name === 'company_id' ? (value ? Number(value) : undefined) : value
@@ -409,9 +426,9 @@ const CompanyForm = () => {
                     </label>
                     <div className="relative">
                       <select
-                        name="template_version_id"
-                        value={formData.template_version_id || ""}
-                        onChange={(e) => setFormData({...formData, template_version_id: e.target.value})}
+                        name="template_id"
+                        value={formData.template_id || ""}
+                        onChange={handleInputChange}
                         className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
                         disabled={loadingTemplates}
                       >

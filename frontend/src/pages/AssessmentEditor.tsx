@@ -35,7 +35,7 @@ const TestTableFormByCategory = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
+  const autoSaveTimer = useRef<number | null>(null);
   const [floatingMenu, setFloatingMenu] = useState<{
     visible: boolean;
     x: number;

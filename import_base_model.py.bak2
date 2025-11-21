@@ -1,0 +1,286 @@
+#!/usr/bin/env python3
+import sys
+import os
+import json
+import uuid
+from sqlalchemy import create_engine, Column, String, Text, Boolean, DateTime, ForeignKey, Integer
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+
+sys.path.insert(0, '/var/www/assessment_ai')
+
+DATABASE_URL = None
+env_file = "/var/www/assessment_ai/.env"
+
+if os.path.exists(env_file):
+    print(f"Carico configurazione da {env_file}")
+    with open(env_file) as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith("DATABASE_URL="):
+                DATABASE_URL = line.split("=", 1)[1].strip().strip('"').strip("'")
+                break
+
+if not DATABASE_URL:
+    print("DATABASE_URL non trovato nel file .env")
+    sys.exit(1)
+
+print(f"Database URL caricato\n")
+
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+class AssessmentTemplate(Base):
+    __tablename__ = "assessment_templates"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code = Column(String, unique=True, nullable=False)
+    name = Column(String, unique=True, nullable=False)
+    description = Column(Text)
+    sector = Column(String)
+    is_active = Column(Boolean, default=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+class TemplateVersion(Base):
+    __tablename__ = "template_versions"
+    id = Column(Integer, primary_key=True)
+    template_id = Column(UUID(as_uuid=True), ForeignKey("assessment_templates.id"))
+    version_label = Column(String, nullable=False)
+    status = Column(String, default="draft")
+    model_name = Column(String)
+    metadata_json = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class Domain(Base):
+    __tablename__ = "domains"
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True, nullable=False)
+    description = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class TemplateDomain(Base):
+    __tablename__ = "template_domains"
+    id = Column(Integer, primary_key=True)
+    template_version_id = Column(Integer, ForeignKey("template_versions.id"))
+    domain_id = Column(Integer, ForeignKey("domains.id"))
+    weight = Column(Integer, default=1)
+    display_order = Column(Integer, default=0)
+
+class Question(Base):
+    __tablename__ = "questions"
+    id = Column(Integer, primary_key=True)
+    template_domain_id = Column(Integer, ForeignKey("template_domains.id"))
+    question_text = Column(Text, nullable=False)
+    help_text = Column(Text)
+    max_score = Column(Integer, default=5)
+    display_order = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+
+def main():
+    print("=" * 70)
+    print("IMPORT BASE_MODEL - INIZIO")
+    print("=" * 70)
+    print()
+    
+    json_file = "/var/www/assessment_ai/base_model.json"
+    
+    if not os.path.exists(json_file):
+        print(f"ERRORE: File {json_file} non trovato!")
+        sys.exit(1)
+    
+    print(f"Carico JSON da: {json_file}")
+    with open(json_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    print(f"JSON caricato: {len(data)} processi")
+    total_activities = sum(len(proc['activities']) for proc in data)
+    print(f"   Processi: {len(data)}")
+    print(f"   Attivita totali: {total_activities}")
+    print()
+    
+    db = SessionLocal()
+    
+    try:
+        print("STEP 1/5: Template 'base_model'")
+        print("-" * 70)
+        
+        template = db.query(AssessmentTemplate).filter_by(code="base_model").first()
+        if template:
+            print(f"   Template 'base_model' gia esistente (ID: {template.id})")
+        else:
+            template = AssessmentTemplate(
+                id=uuid.uuid4(),
+                code="base_model",
+                name="Base Model I4.0",
+                description="Template base Industria 4.0 - Politecnico di Milano",
+                sector="Industria 4.0",
+                is_active=True,
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
+            )
+            db.add(template)
+            db.commit()
+            db.refresh(template)
+            print(f"   Template creato (ID: {template.id})")
+        print()
+        
+        print("STEP 2/5: Versione 'v1'")
+        print("-" * 70)
+        
+        version = db.query(TemplateVersion).filter_by(
+            template_id=template.id,
+            version_label="v1"
+        ).first()
+        
+        if version:
+            print(f"   Versione 'v1' gia esistente (ID: {version.id})")
+        else:
+            metadata = {
+                "source": "base_model.json",
+                "import_date": datetime.utcnow().isoformat(),
+                "processes": []
+            }
+            
+            for proc in data:
+                process_data = {
+                    "name": proc["process"],
+                    "activities": [act["name"] for act in proc["activities"]]
+                }
+                metadata["processes"].append(process_data)
+            
+            version = TemplateVersion(
+                template_id=template.id,
+                version_label="v1",
+                status="published",
+                model_name="base_model_v1",
+                metadata_json=json.dumps(metadata, ensure_ascii=False, indent=2)
+            )
+            db.add(version)
+            db.commit()
+            db.refresh(version)
+            print(f"   Versione 'v1' creata (ID: {version.id})")
+        print()
+        
+        print("STEP 3/5: Domini")
+        print("-" * 70)
+        
+        domain_names = ["Governance", "Monitoring & Control", "Technology", "Organization"]
+        domain_map = {}
+        
+        for idx, domain_name in enumerate(domain_names, 1):
+            domain = db.query(Domain).filter_by(name=domain_name).first()
+            if domain:
+                print(f"   Dominio '{domain_name}' gia esistente (ID: {domain.id})")
+            else:
+                domain = Domain(
+                    name=domain_name,
+                    description=f"Dominio {domain_name} per assessment Industria 4.0"
+                )
+                db.add(domain)
+                db.commit()
+                db.refresh(domain)
+                print(f"   Dominio '{domain_name}' creato (ID: {domain.id})")
+            domain_map[domain_name] = domain
+        print()
+        
+        print("STEP 4/5: Collegamenti Template-Domini")
+        print("-" * 70)
+        
+        template_domain_map = {}
+        
+        for idx, domain_name in enumerate(domain_names, 1):
+            domain = domain_map[domain_name]
+            td = db.query(TemplateDomain).filter_by(
+                template_version_id=version.id,
+                domain_id=domain.id
+            ).first()
+            
+            if td:
+                print(f"   TemplateDomain '{domain_name}' gia collegato (ID: {td.id})")
+            else:
+                td = TemplateDomain(
+                    template_version_id=version.id,
+                    domain_id=domain.id,
+                    weight=1,
+                    display_order=idx
+                )
+                db.add(td)
+                db.commit()
+                db.refresh(td)
+                print(f"   TemplateDomain '{domain_name}' creato (ID: {td.id})")
+            template_domain_map[domain_name] = td
+        print()
+        
+        print("STEP 5/5: Domande")
+        print("-" * 70)
+        
+        first_activity = data[0]["activities"][0]
+        total_questions_created = 0
+        total_questions_existing = 0
+        
+        for domain_name in domain_names:
+            td = template_domain_map[domain_name]
+            questions_dict = first_activity["categories"][domain_name]
+            
+            print(f"\n   Dominio: {domain_name}")
+            
+            for order, (question_text, max_score) in enumerate(questions_dict.items(), 1):
+                existing_q = db.query(Question).filter_by(
+                    template_domain_id=td.id,
+                    question_text=question_text
+                ).first()
+                
+                if existing_q:
+                    total_questions_existing += 1
+                    print(f"      Q{order}: gia esistente (ID: {existing_q.id})")
+                else:
+                    question = Question(
+                        template_domain_id=td.id,
+                        question_text=question_text,
+                        help_text=None,
+                        max_score=5,
+                        display_order=order,
+                        is_active=True
+                    )
+                    db.add(question)
+                    total_questions_created += 1
+                    print(f"      Q{order}: creata")
+        
+        db.commit()
+        print()
+        print(f"   Domande create: {total_questions_created}")
+        print(f"   Domande gia esistenti: {total_questions_existing}")
+        print()
+        
+        total_questions_db = db.query(Question).join(TemplateDomain).filter(
+            TemplateDomain.template_version_id == version.id
+        ).count()
+        
+        print("=" * 70)
+        print("IMPORT COMPLETATO CON SUCCESSO!")
+        print("=" * 70)
+        print()
+        print("RIEPILOGO FINALE:")
+        print(f"   Template: {template.name} (ID: {template.id})")
+        print(f"   Versione: {version.version_label} (ID: {version.id})")
+        print(f"   Model name: {version.model_name}")
+        print(f"   Domini collegati: {len(domain_names)}")
+        print(f"   Domande totali: {total_questions_db}")
+        print()
+        
+    except Exception as e:
+        print()
+        print("ERRORE DURANTE L'IMPORT")
+        print(f"\n{str(e)}\n")
+        db.rollback()
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+    finally:
+        db.close()
+
+if __name__ == "__main__":
+    main()

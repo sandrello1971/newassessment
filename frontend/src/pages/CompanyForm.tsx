@@ -12,6 +12,7 @@ interface CompanyData {
   user_id?: string;
   company_id?: number;
   model_name?: string;
+  template_version_id?: string;
 }
 
 const CompanyForm = () => {
@@ -26,6 +27,26 @@ const CompanyForm = () => {
     effettuato_da: '',
     user_id: '',
     company_id: undefined
+  });
+
+  // Template states
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [loadingTemplates, setLoadingTemplates] = useState(true);
+
+  // Load templates on mount
+  useEffect(() => {
+    const loadTemplates = async () => {
+      try {
+        const res = await axios.get("/api/admin/templates/");
+        setTemplates(res.data || []);
+      } catch (error) {
+        console.error("Errore caricamento template:", error);
+        setTemplates([]);
+      } finally {
+        setLoadingTemplates(false);
+      }
+    };
+    loadTemplates();
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,8 +102,8 @@ const CompanyForm = () => {
         email: formData.email,
         effettuato_da: formData.effettuato_da,
         user_id: formData.user_id || undefined,
-        company_id: formData.company_id || undefined,
-        model_name: formData.model_name || 'i40_assessment_fto'
+        template_version_id: formData.template_version_id || undefined,
+        model_name: formData.model_name || undefined  // Retrocompatibilità
       });
       
       const sessionId = response.data.id;
@@ -388,19 +409,21 @@ const CompanyForm = () => {
                     </label>
                     <div className="relative">
                       <select
-                        name="model_name"
-                        value={formData.model_name || "i40_assessment_fto"}
-                        onChange={handleInputChange}
+                        name="template_version_id"
+                        value={formData.template_version_id || ""}
+                        onChange={(e) => setFormData({...formData, template_version_id: e.target.value})}
                         className="w-full bg-gray-50 border border-gray-300 rounded-xl px-4 py-4 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                        disabled={loadingTemplates}
                       >
-                        {models.map((model) => (
-                          <option key={model.name} value={model.name}>
-                            {model.name} {model.is_default ? "(Default)" : ""}
+                        <option value="">Seleziona template...</option>
+                        {templates.map((template) => (
+                          <option key={template.id} value={template.id}>
+                            {template.name} - {template.sector}
                           </option>
                         ))}
                       </select>
                       <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                        <span className="text-gray-400">📋</span>
+                        <span className="text-gray-400">{loadingTemplates ? '⏳' : '📋'}</span>
                       </div>
                     </div>
                     <p className="text-sm text-gray-500 mt-2">Seleziona il modello di valutazione</p>

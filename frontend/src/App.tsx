@@ -12,23 +12,30 @@ import NewAssessment from './pages/NewAssessment';
 import CompanyForm from './pages/CompanyForm';
 import AIInterview from './pages/AIInterview';
 import TestTableForm from './pages/TestTableForm';
-import TestTableFormByCategory from './pages/TestTableFormByCategory';
+import AssessmentEditor from './pages/AssessmentEditor';
 
-import AdminModels from './pages/AdminModels';
-import AdminQuestions from './pages/AdminQuestions';
+import AdminTemplates from './pages/admin/AdminTemplates';
+import AdminQuestions from './pages/admin/AdminQuestions';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminFiles from './pages/admin/AdminFiles';
+import AdminSettings from './pages/admin/AdminSettings';
 import EditSession from './pages/EditSession';
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
 <Route path="/assessment-test/:sessionId" element={<AssessmentFormByDimension />} />
-<Route path="/assessment-table-test/:sessionId" element={<TestTableFormByCategory />} />
+<Route path="/assessment-table-test/:sessionId" element={<AssessmentEditor />} />
 
         <Route path="/test-table/:sessionId" element={<TestTableForm />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin/templates" element={<AdminTemplates />} />
+        <Route path="/admin/files" element={<AdminFiles />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/admin/models" element={<AdminModels />} />
-        <Route path="/admin/questions" element={<AdminQuestions />} />
         
         {/* Nuova route per inserire dati azienda */}
         <Route path="/company-form" element={<CompanyForm />} />

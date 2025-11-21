@@ -28,8 +28,8 @@ def create_template(
     if not code:
         # Genera code da name: "My Template" -> "my_template"
         import time
-        code_base = re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_')
-    
+        import uuid
+        code = re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_') + '_' + str(uuid.uuid4().hex[:8])    
     tpl = models.AssessmentTemplate(
         code=code,
         name=name,

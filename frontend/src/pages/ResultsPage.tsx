@@ -210,9 +210,8 @@ const SummaryRadarComponent = ({ sessionId }: { sessionId: string }) => {
 };
 
 // ProcessCard - rimane uguale ma aggiunta gestione errori migliorata
-const ProcessCard = ({ process, sessionId }: { process: ProcessData; sessionId: string }) => {
+const ProcessCard = ({ process, sessionId, domains }: { process: ProcessData; sessionId: string; domains: any[] }) => {
   const statusColors = getStatusColor(process.status);
-  
   return (
     <div className="group bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl hover:shadow-2xl transition-all duration-300 border border-white/20 overflow-hidden hover:bg-white/15 hover:scale-[1.02]">
       <div className="bg-gradient-to-r from-slate-800 via-purple-800 to-slate-800 px-6 py-6 text-white relative overflow-hidden">
@@ -247,12 +246,7 @@ const ProcessCard = ({ process, sessionId }: { process: ProcessData; sessionId: 
       <div className="p-6">
         <h4 className="text-lg font-semibold mb-4 text-white">🎯 Le 4 Dimensioni del Modello</h4>
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {[
-            { key: 'governance', name: 'Governance', icon: '🏛️', color: 'blue', desc: 'Best practices, standardizzazione' },
-            { key: 'monitoring_control', name: 'Monitoring', icon: '📊', color: 'green', desc: 'Miglioramento continuo' },
-            { key: 'technology', name: 'Technology', icon: '💻', color: 'purple', desc: 'Sistemi ICT, automazione' },
-            { key: 'organization', name: 'Organization', icon: '👥', color: 'orange', desc: 'Responsabilità, collaborazione' }
-          ].map((dim) => {
+           {domains.map((dim: any) => {
             const score = process.dimensions[dim.key as keyof typeof process.dimensions] || 0;
             const percentage = (score / 5) * 100;
             
@@ -501,11 +495,30 @@ const ResultsPage = () => {
   const [radarData, setRadarData] = useState<RadarData | null>(null);
   const [summaryData, setSummaryData] = useState<SummaryData | null>(null);
   const [processesData, setProcessesData] = useState<ProcessesRadarData | null>(null);
+
+  // Carica domini dal template
+  useEffect(() => {
+    const loadDomains = async () => {
+      if (!sessionId) return;
+      try {
+        const sessionRes = await fetch(`/api/assessment/session/${sessionId}`);
+        const sessionData = await sessionRes.json();
+        if (sessionData.template_version_id) {
+          const domainsRes = await fetch(`/api/admin/templates/versions/${sessionData.template_version_id}/domains`);
+          const domainsData = await domainsRes.json();
+          setDomains(domainsData);
+        }
+      } catch (error) {
+        console.error("Error loading domains:", error);
+      }
+    };
+    loadDomains();
+  }, [sessionId]);
   const [suggestions, setSuggestions] = useState<AISuggestions | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [activeTab, setActiveTab] = useState<'overview' | 'processes' | 'analysis' | 'stats'>('overview');  // ✅ AGGIUNTO TAB 'stats'
-
+const [domains, setDomains] = useState<any[]>([]);
   useEffect(() => {
     if (!sessionId) {
       setError('ID sessione mancante');
@@ -701,7 +714,7 @@ const ResultsPage = () => {
             {processesData && sessionId && (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 {processesData.processes.map((process) => (
-                  <ProcessCard key={process.process} process={process} sessionId={sessionId} />
+<ProcessCard key={process.process} process={process} sessionId={sessionId} domains={domains} />
                 ))}
               </div>
             )}

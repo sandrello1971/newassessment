@@ -226,7 +226,7 @@ def delete_template(template_id: str, db: Session = Depends(get_db)):
     
     # Verifica che non ci siano assessment attivi che usano questo template
     active_assessments = db.query(models.AssessmentSession).filter(
-        models.AssessmentSession.template_id == template_id
+        models.AssessmentSession.template_version_id == template_id
     ).count()
     
     if active_assessments > 0:

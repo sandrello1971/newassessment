@@ -248,7 +248,7 @@ const TestTableFormByCategory = () => {
       <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Assessment Digitale 4.0 - {currentCategory}</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">ENTERPRISE ASSESSMENT - {currentCategory}</h1>
             <p className="text-gray-600 mb-4">Dimensione {currentCategoryIndex + 1} di {CATEGORIES.length}</p>
             <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
               <div className="bg-blue-500 h-3 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }} />

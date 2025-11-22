@@ -5,6 +5,13 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend, 
 import ParetoCharts from '../components/ParetoCharts';
 import ParetoRecommendations from '../components/ParetoRecommendations';
 
+interface CompanyInfo {
+  azienda_nome: string;
+  settore: string;
+  dimensione: string;
+  logo_path?: string;
+}
+
 const CATEGORIES_ORDER = ["Governance", "Monitoring & Control", "Technology", "Organization"];
 
 const getScoreIcon = (score: number | null | undefined) => {
@@ -31,6 +38,7 @@ const ResultsByCategoryPage = () => {
   const navigate = useNavigate();
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null);
   const [showDetails, setShowDetails] = useState(false);
   const [loadingAI, setLoadingAI] = useState(false);
   const [showProcessRadars, setShowProcessRadars] = useState(false);
@@ -41,6 +49,18 @@ const ResultsByCategoryPage = () => {
   const [reformatting, setReformatting] = useState(false);
 
   useEffect(() => {
+    // Carica dati sessione
+    axios.get(`/api/assessment/session/${id}`)
+      .then(res => {
+        setCompanyInfo({
+          azienda_nome: res.data.azienda_nome,
+          settore: res.data.settore,
+          dimensione: res.data.dimensione,
+          logo_path: res.data.logo_path
+        });
+      });
+    
+    // Carica risultati
     axios.get(`/api/assessment/${id}/results`, { headers: { "Cache-Control": "no-cache", "Pragma": "no-cache" } })
       .then(res => {
         setResults(res.data);
@@ -210,7 +230,23 @@ const ResultsByCategoryPage = () => {
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold mb-6">Risultati Assessment Digitale 4.0</h1>
+                    {/* Header con logo e nome azienda */}
+          {companyInfo && (
+            <div className="mb-6 flex items-center gap-4 bg-gray-100 rounded-xl p-4 border border-gray-200">
+              {companyInfo.logo_path && (
+                <img 
+                  src={companyInfo.logo_path} 
+                  alt={companyInfo.azienda_nome}
+                  className="h-16 w-16 object-contain"
+                />
+              )}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-800">{companyInfo.azienda_nome}</h2>
+                <p className="text-sm text-gray-600">{companyInfo.settore} - {companyInfo.dimensione}</p>
+              </div>
+            </div>
+          )}
+          <h1 className="text-2xl md:text-3xl font-bold mb-6">Risultati ENTERPRISE ASSESSMENT</h1>
           <div className="flex justify-between items-center">
             <div className="bg-blue-500 text-white px-6 py-3 rounded-lg">
               <span className="text-sm font-semibold">FINAL RATE:</span>

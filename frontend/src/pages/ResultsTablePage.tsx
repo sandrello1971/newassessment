@@ -338,7 +338,7 @@ const ResultsTablePage = () => {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">
-              Risultati Assessment Digitale 4.0
+              Risultati ENTERPRISE ASSESSMENT
             </h1>
             <div className="mt-4 bg-blue-500 text-white px-6 py-3 rounded-lg inline-block">
               <span className="text-sm font-semibold uppercase">FINAL RATE:</span>

@@ -481,7 +481,7 @@ const CompanyForm = () => {
 
           <div className="text-center mt-8">
             <p className="text-gray-500 text-sm">
-              Assessment Digitale 4.0 • Trasformazione digitale per il manifatturiero
+              ENTERPRISE ASSESSMENT • Trasformazione digitale per il manifatturiero
             </p>
           </div>
         </div>

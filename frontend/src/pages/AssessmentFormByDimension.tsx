@@ -329,7 +329,7 @@ const AssessmentFormByDimension: React.FC = () => {
         {/* Header con progress */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">
-            Assessment Digitale 4.0
+            ENTERPRISE ASSESSMENT
           </h1>
           {sessionInfo && (
             <p className="text-white/60 text-sm mb-2">

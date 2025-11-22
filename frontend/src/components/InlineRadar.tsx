@@ -69,7 +69,7 @@ const InlineRadar: React.FC<InlineRadarProps> = ({ sessionId }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        🎯 Radar Assessment Digitale
+        🎯 Radar ENTERPRISE ASSESSMENT
       </h2>
       <p className="text-center text-gray-600 mb-6">
         Modello di valutazione Politecnico di Milano - 4 Dimensioni di Maturità

@@ -106,6 +106,9 @@ class PDFReportGenerator:
         
         # Logo aziendale (se presente) - tra "Digital Assessment" e nome azienda
         logo_path = session_data.get('logo_path')
+        # Converti path relativo in assoluto
+        if logo_path and logo_path.startswith("/uploads/"):
+            logo_path = "/var/www/assessment_ai" + logo_path
         if logo_path and os.path.exists(logo_path):
             try:
                 from PIL import Image

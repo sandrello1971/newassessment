@@ -205,7 +205,7 @@ const ResultsByCategoryPage = () => {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-6">Risultati Assessment Digitale 4.0</h1>
+          <h1 className="text-3xl font-bold mb-6">Risultati ENTERPRISE ASSESSMENT</h1>
           <div className="flex justify-between items-center">
             <div className="bg-blue-500 text-white px-6 py-3 rounded-lg">
               <span className="text-sm font-semibold">FINAL RATE:</span>

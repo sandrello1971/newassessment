@@ -218,7 +218,7 @@ const NewAssessment: React.FC = () => {
           {/* Bottom Info */}
           <div className="text-center mt-8">
             <p className="text-white/50 text-sm">
-              Assessment Digitale 4.0 • Modalità Rapida
+              ENTERPRISE ASSESSMENT • Modalità Rapida
             </p>
           </div>
         </div>

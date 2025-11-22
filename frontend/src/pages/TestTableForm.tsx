@@ -14,6 +14,14 @@ interface ProcessData {
   }>;
 }
 
+
+interface CompanyInfo {
+  azienda_nome: string;
+  settore: string;
+  dimensione: string;
+  logo_path?: string;
+}
+
 interface Answer {
   process: string;
   activity: string;
@@ -34,6 +42,7 @@ const TestTableFormByCategory = () => {
   const [answers, setAnswers] = useState<Map<string, Answer>>(new Map());
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [floatingMenu, setFloatingMenu] = useState<{
     visible: boolean;
@@ -54,7 +63,14 @@ const TestTableFormByCategory = () => {
       try {
         // Carica sessione e version_id
         const sessionRes = await axios.get(`/api/assessment/session/${sessionId}`);
-        const versionId = sessionRes.data.template_version_id;
+        const sessionData = sessionRes.data;
+        setCompanyInfo({
+          azienda_nome: sessionData.azienda_nome,
+          settore: sessionData.settore,
+          dimensione: sessionData.dimensione,
+          logo_path: sessionData.logo_path
+        });
+        const versionId = sessionData.template_version_id;
         
         if (!versionId) {
           console.error('❌ Nessun template_version_id nella sessione!');
@@ -134,12 +150,42 @@ const TestTableFormByCategory = () => {
     return `${process}|${activity}|${category}|${dimension}`;
   };
 
+  const autoSave = useCallback(async () => {
+    if (!sessionId || answers.size === 0) return;
+    
+    setSaving(true);
+    try {
+      console.log('💾 Salvataggio in corso...');
+      const results = Array.from(answers.values());
+      await axios.post(`/api/assessment/${sessionId}/submit`, results);
+      console.log('✅ Salvato!');
+      await new Promise(resolve => setTimeout(resolve, 300));
+    } catch (error) {
+      console.error('❌ Errore salvataggio:', error);
+    } finally {
+      setSaving(false);
+    }
+  }, [sessionId, answers]);
+
+  // Autosave ogni 30 secondi
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (answers.size > 0) {
+        console.log("⏰ Autosave automatico...");
+        autoSave();
+      }
+    }, 30000); // 30 secondi
+
+    return () => clearInterval(interval);
+  }, [autoSave, answers]);
+
   const handleScoreChange = (process: string, activity: string, category: string, dimension: string, score: number) => {
     const key = createKey(process, activity, category, dimension);
     const updated = new Map(answers);
     const existing = answers.get(key) || { process, activity, category, dimension, score: 0, note: '', is_not_applicable: false };
     updated.set(key, { ...existing, score });
     setAnswers(updated);
+    autoSave();
   };
 
   const handleNoteChange = (process: string, activity: string, category: string, dimension: string, note: string) => {
@@ -148,6 +194,7 @@ const TestTableFormByCategory = () => {
     const existing = answers.get(key) || { process, activity, category, dimension, score: 0, is_not_applicable: false };
     updated.set(key, { ...existing, note });
     setAnswers(updated);
+    autoSave();
   };
 
   const handleNotApplicableToggle = (process: string, activity: string, category: string, dimension: string) => {
@@ -156,6 +203,7 @@ const TestTableFormByCategory = () => {
     const existing = answers.get(key) || { process, activity, category, dimension, score: 0, note: '', is_not_applicable: false };
     updated.set(key, { ...existing, is_not_applicable: !existing.is_not_applicable, score: !existing.is_not_applicable ? 0 : existing.score });
     setAnswers(updated);
+    autoSave();
   };
 
   // Copia in colonna (verso il basso)
@@ -218,23 +266,6 @@ const TestTableFormByCategory = () => {
   };
 
   // Auto-save senza validazione
-  const autoSave = useCallback(async () => {
-    if (!sessionId || answers.size === 0) return;
-    
-    setSaving(true);
-    try {
-      console.log('💾 Salvataggio in corso...');
-      const results = Array.from(answers.values());
-      await axios.post(`/api/assessment/${sessionId}/submit`, results);
-      console.log('✅ Salvato!');
-      await new Promise(resolve => setTimeout(resolve, 300));
-    } catch (error) {
-      console.error('❌ Errore salvataggio:', error);
-    } finally {
-      setSaving(false);
-    }
-  }, [sessionId, answers]);
-
   const handleSubmit = async () => {
     try {
       setSubmitting(true);
@@ -270,7 +301,24 @@ const TestTableFormByCategory = () => {
       <div className="min-h-screen bg-gray-50 p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Assessment Digitale 4.0 - {currentCategory}</h1>
+                      {/* Header con logo e nome azienda */}
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {companyInfo?.logo_path && (
+                <img 
+                  src={companyInfo.logo_path} 
+                  alt={companyInfo.azienda_nome}
+                  className="h-16 w-16 object-contain"
+                />
+              )}
+              <div>
+                <h2 className="text-xl font-semibold">{companyInfo?.azienda_nome}</h2>
+                <p className="text-sm text-gray-600">{companyInfo?.settore} - {companyInfo?.dimensione}</p>
+              </div>
+            </div>
+          </div>
+          {/* Titolo con dimensione */}
+<h1 className="text-3xl font-bold text-gray-800 mb-2">ENTERPRISE ASSESSMENT - {currentCategory}</h1>
             <p className="text-gray-600 mb-4">Dimensione {currentCategoryIndex + 1} di {CATEGORIES.length}</p>
             <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
               <div className="bg-blue-500 h-3 rounded-full transition-all duration-500" style={{ width: `${progressPercentage}%` }} />
@@ -302,7 +350,7 @@ const TestTableFormByCategory = () => {
                   >
                     ← {currentCategoryIndex > 0 ? CATEGORIES[currentCategoryIndex - 1] : ''}
                   </button>
-                  <h2 className="text-2xl font-bold text-gray-800">{process.process}</h2>
+                  <h2 className="text-2xl font-bold text-gray-800">{currentCategory} | {process.process}</h2>
                   <button
                     onClick={() => setCurrentCategoryIndex(Math.min(CATEGORIES.length - 1, currentCategoryIndex + 1))}
                     disabled={currentCategoryIndex === CATEGORIES.length - 1}

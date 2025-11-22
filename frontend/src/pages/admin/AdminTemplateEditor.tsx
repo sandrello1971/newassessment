@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Trash2, Save, ChevronUp, ChevronDown, AlertCircle, Edit2 } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, ChevronUp, ChevronDown, AlertCircle, Edit2 } from 'lucide-react';
 import axios from 'axios';
 
 
@@ -383,6 +383,7 @@ Questa azione è irreversibile e cancellerà anche tutte le versioni e domande a
     }
 
     try {
+      setLoading(true);
       let targetTemplateId = selectedTemplateId;
       let targetVersionId = _versionId;
       
@@ -448,6 +449,7 @@ Questa azione è irreversibile e cancellerà anche tutte le versioni e domande a
         }
       }
 
+      setLoading(false);
       alert(saveAsNew ? 'Nuovo template creato con successo!' : 'Template salvato con successo!');
       setHasUnsavedChanges(false);
       setSaveAsNew(false);
@@ -461,6 +463,7 @@ Questa azione è irreversibile e cancellerà anche tutte le versioni e domande a
       }
 
     } catch (err: any) {
+      setLoading(false);
       console.error('Errore salvataggio:', err);
       alert(`Errore: ${err.response?.data?.detail || err.message}`);
     }
@@ -527,11 +530,15 @@ Questa azione è irreversibile e cancellerà anche tutte le versioni e domande a
               
               <button
                 onClick={saveChanges}
-                disabled={!hasUnsavedChanges || (saveAsNew && !newTemplateName.trim())}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                disabled={loading}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                <Save className="w-4 h-4" />
-                {saveAsNew ? 'Salva Nuovo' : 'Salva'}
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>Salvataggio...</span>
+                  </>
+                ) : (saveAsNew ? "Salva Nuovo" : "Salva")}
               </button>
               <button
                 onClick={deleteTemplate}

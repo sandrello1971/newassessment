@@ -140,7 +140,7 @@ const ProcessesRadar: React.FC<ProcessesRadarProps> = ({ sessionId, showSuggesti
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-xl shadow-lg">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-3">
-              📊 Assessment Digitale per Processo
+              📊 ENTERPRISE ASSESSMENT per Processo
             </h2>
             <p className="text-blue-100 mb-2">
               Modello di valutazione Politecnico di Milano - 4 Dimensioni di Maturità

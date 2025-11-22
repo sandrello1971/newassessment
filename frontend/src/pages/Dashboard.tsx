@@ -203,6 +203,17 @@ const Dashboard = () => {
             <span className="mr-3 text-2xl group-hover:rotate-12 transition-transform duration-300">⚙️</span>
             Gestisci Modelli
           </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
+            className="group bg-red-500 text-white px-8 py-4 rounded-2xl hover:bg-red-600 transition-all duration-300 font-bold flex items-center shadow-2xl"
+          >
+            <span className="mr-3 text-2xl group-hover:rotate-12 transition-transform duration-300">🚪</span>
+            Logout
+          </button>
           </div>
         </div>
 
@@ -407,7 +418,7 @@ const Dashboard = () => {
         {/* Footer */}
         <div className="text-center mt-12">
           <p className="text-gray-800/50 text-sm">
-            Assessment Digitale 4.0 • Powered by{' '}
+            ENTERPRISE ASSESSMENT • Powered by{' '}
             <span className="text-blue-400 font-medium">Noscite - In Digitali Nova Virtus</span>
           </p>
         </div>

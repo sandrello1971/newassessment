@@ -514,7 +514,7 @@ const AssessmentForm: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-4">
-            Assessment Digitale 4.0
+            ENTERPRISE ASSESSMENT
           </h1>
           <p className="text-white/70 text-xl">
             Valuta la maturità digitale della tua azienda

@@ -617,7 +617,7 @@ const [domains, setDomains] = useState<any[]>([]);
               </button>
               <div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
-                  Assessment Digitale 4.0
+                  ENTERPRISE ASSESSMENT
                 </h1>
                 <p className="text-white/70 mt-2 text-lg">
                   Risultati completi della valutazione • Sessione: {sessionId?.slice(0, 8)}...
